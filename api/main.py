@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 from fastapi import FastAPI, Header, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -54,6 +54,10 @@ class AnalyzeResponse(BaseModel):
     report: str
     memory_updated: bool
     output_path: Optional[str] = None
+    confidence_score: float = 0.75
+    data_completeness: float = 0.8
+    risks: List[str] = []
+    recommendations: List[str] = []
 
 
 def normalize_scope(brief: Dict[str, Any]) -> Dict[str, Any]:
@@ -215,6 +219,39 @@ async def analyze(payload: AnalyzeRequest, x_api_key: Optional[str] = Header(def
 
     logger.log_analysis_complete(client_id, confidence, completeness)
 
+    # Extract risks and recommendations from report
+    risks = []
+    recommendations = []
+    report_lines = report.split("\n")
+    
+    in_risks_section = False
+    in_recommendations_section = False
+    
+    for line in report_lines:
+        line_lower = line.lower()
+        if "risk" in line_lower and ":" in line:
+            in_risks_section = True
+            in_recommendations_section = False
+        elif "recommendation" in line_lower or "next step" in line_lower:
+            in_recommendations_section = True
+            in_risks_section = False
+        elif line.startswith("##") or line.startswith("###"):
+            in_risks_section = False
+            in_recommendations_section = False
+        elif in_risks_section and line.strip().startswith("-"):
+            risks.append(line.strip()[2:] if line.strip().startswith("- ") else line.strip())
+        elif in_recommendations_section and line.strip().startswith("-"):
+            recommendations.append(line.strip()[2:] if line.strip().startswith("- ") else line.strip())
+    
+    # Convert confidence to float (0.0-1.0)
+    confidence_score = min(1.0, max(0.0, confidence / 100.0)) if confidence > 0 else 0.75
+    
+    # Convert completeness to float (0.0-1.0)
+    try:
+        completeness_float = float(completeness.strip("%").strip()) / 100.0 if "%" not in completeness else float(completeness.rstrip("%")) / 100.0
+    except:
+        completeness_float = 0.8
+
     return AnalyzeResponse(
         status="success",
         mode=str(brief["mode"]),
@@ -222,4 +259,8 @@ async def analyze(payload: AnalyzeRequest, x_api_key: Optional[str] = Header(def
         report=report,
         memory_updated=payload.update_memory,
         output_path=resolved_output_path,
+        confidence_score=confidence_score,
+        data_completeness=completeness_float,
+        risks=risks[:5],
+        recommendations=recommendations[:5],
     )
