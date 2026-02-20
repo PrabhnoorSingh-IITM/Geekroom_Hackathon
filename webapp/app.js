@@ -23,6 +23,7 @@ const datasetState = {
   files: [],
   parsed: {},
   mapping: {},
+  mode: "sample",
 };
 
 const dataSourceKeys = [
@@ -78,6 +79,10 @@ const COLUMN_ALIASES = {
 const fileInput = document.getElementById("fileInput");
 const fileList = document.getElementById("fileList");
 const runBtn = document.getElementById("runBtn");
+const demoBtn = document.getElementById("demoBtn");
+const uploadField = document.getElementById("uploadField");
+const mappingPanel = document.getElementById("mappingPanel");
+const dataModeInputs = document.querySelectorAll("input[name='dataMode']");
 
 function parseCsv(text) {
   const lines = text.split(/\r?\n/).filter((line) => line.trim().length > 0);
@@ -169,6 +174,9 @@ function addFileCard(file) {
 }
 
 async function handleFiles(files) {
+  if (datasetState.mode !== "upload") {
+    return;
+  }
   datasetState.files = Array.from(files);
   datasetState.parsed = {};
   datasetState.mapping = {};
@@ -240,6 +248,10 @@ function normalizeRows(rows, mappedKey) {
 }
 
 function buildDataSources() {
+  if (datasetState.mode === "sample") {
+    return { ...CONFIG.DEFAULT_SOURCES };
+  }
+
   const dataSources = {};
 
   dataSourceKeys.forEach((key) => {
@@ -278,14 +290,16 @@ function validateInputs(values, dataSources) {
     errors.push("API base URL is required.");
   }
 
-  const missingSources = dataSourceKeys.filter((key) => dataSources[key] === undefined);
-  if (missingSources.length > 0) {
-    errors.push(`Missing data sources: ${missingSources.join(", ")}.`);
-  }
+  if (datasetState.mode === "upload") {
+    const missingSources = dataSourceKeys.filter((key) => dataSources[key] === undefined);
+    if (missingSources.length > 0) {
+      errors.push(`Missing data sources: ${missingSources.join(", ")}.`);
+    }
 
-  const emptySources = dataSourceKeys.filter((key) => Array.isArray(dataSources[key]) && dataSources[key].length === 0);
-  if (emptySources.length > 0) {
-    errors.push(`Uploaded datasets are empty: ${emptySources.join(", ")}.`);
+    const emptySources = dataSourceKeys.filter((key) => Array.isArray(dataSources[key]) && dataSources[key].length === 0);
+    if (emptySources.length > 0) {
+      errors.push(`Uploaded datasets are empty: ${emptySources.join(", ")}.`);
+    }
   }
 
   if (errors.length > 0) {
@@ -345,6 +359,9 @@ async function run() {
     brief: {
       mode: values.mode,
       business_goal: values.goal,
+      marketplaces: values.marketplace ? [values.marketplace] : [],
+      region: values.region || "Unknown",
+      timeframe: values.timeframe || "Unspecified",
       scope: {
         type: values.scopeType,
         value: values.scopeValue,
@@ -379,6 +396,8 @@ async function init() {
   setDefaultValues();
   updateMappingStatus(datasetState.mapping);
 
+  setDataMode(getSelectedDataMode());
+
   try {
     await fetchHealth(CONFIG.API_BASE_URL);
     setHealthStatus(true);
@@ -394,7 +413,32 @@ async function init() {
   }
 }
 
+function getSelectedDataMode() {
+  const selected = Array.from(dataModeInputs).find((input) => input.checked);
+  return selected ? selected.value : "sample";
+}
+
+function setDataMode(mode) {
+  datasetState.mode = mode;
+  const showUploads = mode === "upload";
+  uploadField.classList.toggle("hidden", !showUploads);
+  fileList.classList.toggle("hidden", !showUploads);
+  mappingPanel.classList.toggle("hidden", !showUploads);
+
+  if (!showUploads) {
+    datasetState.mapping = {};
+    updateMappingStatus(datasetState.mapping);
+  }
+}
+
 fileInput.addEventListener("change", (event) => handleFiles(event.target.files));
 runBtn.addEventListener("click", run);
+demoBtn.addEventListener("click", () => {
+  setDefaultValues();
+  updateStatusText("Demo values loaded.");
+});
+dataModeInputs.forEach((input) => {
+  input.addEventListener("change", () => setDataMode(getSelectedDataMode()));
+});
 
 init();

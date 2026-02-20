@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Sora:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -20,7 +20,7 @@
         <div>
           <p class="eyebrow">Research Console</p>
           <h1>E-Commerce Intelligence Agent</h1>
-          <p class="subtitle">Run commerce analysis in Quick or Deep mode without touching code.</p>
+          <p class="subtitle">Upload data or use the sample datasets to generate a decision-ready report.</p>
         </div>
         <div class="status">
           <span id="healthBadge" class="badge badge-muted">API: checking...</span>
@@ -29,10 +29,45 @@
       </header>
 
       <main class="grid">
+        <section class="panel panel-step">
+          <div class="panel-header">
+            <h2>Start Here</h2>
+            <p>Fill the basics, pick your data, then run the analysis.</p>
+          </div>
+
+          <div class="step-list">
+            <div class="step-item">
+              <span class="step-index">1</span>
+              <div>
+                <strong>Choose a goal and scope</strong>
+                <p>Tell the agent what to analyze.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <span class="step-index">2</span>
+              <div>
+                <strong>Pick your data</strong>
+                <p>Use the sample datasets or upload CSVs.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <span class="step-index">3</span>
+              <div>
+                <strong>Run and review</strong>
+                <p>Read the report and recommendations on the right.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="inline-actions">
+            <button id="demoBtn" class="ghost">Load demo values</button>
+          </div>
+        </section>
+
         <section class="panel">
           <div class="panel-header">
-            <h2>Analysis Configuration</h2>
-            <p>Set how the agent should reason.</p>
+            <h2>Analysis Setup</h2>
+            <p>Define the goal, scope, and where the API is running.</p>
           </div>
 
           <div class="field">
@@ -55,18 +90,35 @@
             <span id="goalError" class="field-error"></span>
           </div>
 
-          <div class="field">
-            <label>Scope Type</label>
-            <select id="scopeType">
-              <option value="SKU">SKU</option>
-              <option value="Category">Category</option>
-            </select>
+          <div class="field split">
+            <div>
+              <label>Scope Type</label>
+              <select id="scopeType">
+                <option value="SKU">SKU</option>
+                <option value="Category">Category</option>
+              </select>
+            </div>
+            <div>
+              <label>Scope Value</label>
+              <input id="scopeValue" placeholder="e.g., SKU-472 or Bluetooth Earbuds" />
+              <span id="scopeValueError" class="field-error"></span>
+            </div>
+          </div>
+
+          <div class="field split">
+            <div>
+              <label>Marketplace</label>
+              <input id="marketplace" placeholder="e.g., Amazon" />
+            </div>
+            <div>
+              <label>Region</label>
+              <input id="region" placeholder="e.g., India" />
+            </div>
           </div>
 
           <div class="field">
-            <label>Scope Value</label>
-            <input id="scopeValue" placeholder="e.g., SKU-472 or Bluetooth Earbuds" />
-            <span id="scopeValueError" class="field-error"></span>
+            <label>Timeframe</label>
+            <input id="timeframe" placeholder="e.g., Last 30 days" />
           </div>
 
           <div class="field">
@@ -91,21 +143,37 @@
             </div>
           </div>
 
-          <button id="runBtn" class="primary">
-            <span class="btn-text">Run Analysis</span>
-            <span class="spinner" aria-hidden="true"></span>
-          </button>
-          <p id="runStatus" class="status-text"></p>
+          <div class="run-row">
+            <button id="runBtn" class="primary">
+              <span class="btn-text">Run Analysis</span>
+              <span class="spinner" aria-hidden="true"></span>
+            </button>
+            <p id="runStatus" class="status-text"></p>
+          </div>
           <div id="alert" class="alert hidden"></div>
         </section>
 
         <section class="panel">
           <div class="panel-header">
-            <h2>Dataset Management</h2>
-            <p>Upload CSVs and map them to the required sources.</p>
+            <h2>Data Sources</h2>
+            <p>Use the sample datasets or upload your own CSVs.</p>
           </div>
 
           <div class="field">
+            <label>Data Mode</label>
+            <div class="segmented">
+              <label>
+                <input type="radio" name="dataMode" value="sample" checked />
+                Sample datasets
+              </label>
+              <label>
+                <input type="radio" name="dataMode" value="upload" />
+                Upload CSVs
+              </label>
+            </div>
+          </div>
+
+          <div class="field" id="uploadField">
             <label>Upload CSV files</label>
             <input id="fileInput" type="file" accept=".csv" multiple />
             <small>Files are parsed in-browser and sent inline to the API.</small>
@@ -113,7 +181,7 @@
 
           <div id="fileList" class="file-list"></div>
 
-          <div class="mapping">
+          <div class="mapping" id="mappingPanel">
             <h3>Dataset Mapping</h3>
             <div class="mapping-grid">
               <div class="mapping-item">
@@ -140,7 +208,7 @@
           </div>
         </section>
 
-        <section class="panel">
+        <section class="panel panel-output">
           <div class="panel-header">
             <h2>Research Output</h2>
             <p>Structured insights and strategic recommendations.</p>

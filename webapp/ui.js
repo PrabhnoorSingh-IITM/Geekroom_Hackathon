@@ -155,6 +155,9 @@ export function getFormValues() {
     goal: document.getElementById("goal").value,
     scopeType: document.getElementById("scopeType").value,
     scopeValue: document.getElementById("scopeValue").value.trim(),
+    marketplace: document.getElementById("marketplace").value.trim(),
+    region: document.getElementById("region").value.trim(),
+    timeframe: document.getElementById("timeframe").value.trim(),
     apiBaseUrl: document.getElementById("apiBaseUrl").value.trim() || CONFIG.API_BASE_URL,
     apiKey: document.getElementById("apiKey").value.trim(),
     constraints: Array.from(document.querySelectorAll(".constraint:checked")).map((input) => input.value),
@@ -163,6 +166,13 @@ export function getFormValues() {
 
 export function setDefaultValues() {
   document.getElementById("apiBaseUrl").value = CONFIG.API_BASE_URL;
+  document.getElementById("mode").value = CONFIG.DEFAULT_BRIEF.mode;
+  document.getElementById("goal").value = CONFIG.DEFAULT_BRIEF.businessGoal;
+  document.getElementById("scopeType").value = CONFIG.DEFAULT_BRIEF.scopeType;
+  document.getElementById("scopeValue").value = CONFIG.DEFAULT_BRIEF.scopeValue;
+  document.getElementById("marketplace").value = CONFIG.DEFAULT_BRIEF.marketplace;
+  document.getElementById("region").value = CONFIG.DEFAULT_BRIEF.region;
+  document.getElementById("timeframe").value = CONFIG.DEFAULT_BRIEF.timeframe;
 }
 
 export function scoreToBadge(score) {

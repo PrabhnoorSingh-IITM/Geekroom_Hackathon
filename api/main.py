@@ -2,11 +2,14 @@ import os
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from fastapi import FastAPI, Header, HTTPException
+from fastapi import FastAPI, Header, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from src.research_agent import run_analysis, read_json, update_memory, write_json
+from api.rate_limiter import rate_limiter
+from api.logger import logger
+from api.validators import validate_brief
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -117,19 +120,43 @@ def auth_status() -> Dict[str, bool]:
 
 
 @app.post("/analyze", response_model=AnalyzeResponse)
-def analyze(payload: AnalyzeRequest, x_api_key: Optional[str] = Header(default=None)) -> AnalyzeResponse:
+async def analyze(payload: AnalyzeRequest, x_api_key: Optional[str] = Header(default=None), request: Request = None) -> AnalyzeResponse:
+    # Extract client ID for logging
+    client_id = request.client.host if request else "unknown"
+    
+    # Rate limiting
+    try:
+        await rate_limiter.check_rate_limit(client_id)
+    except HTTPException as e:
+        logger.log_security_event("rate_limit_exceeded", client_id)
+        raise
+    
+    # Authentication
     if API_KEY:
         if not x_api_key or x_api_key.strip() != API_KEY:
+            logger.log_security_event("unauthorized_api_key", client_id)
             raise HTTPException(status_code=401, detail="Unauthorized: invalid or missing API key")
+
+    # Log incoming request
+    logger.log_api_request(client_id, "/analyze", "POST", dict(payload.brief))
 
     brief = dict(payload.brief)
     brief["scope"] = normalize_scope(brief)
     brief["data_sources"] = normalize_data_sources(brief.get("data_sources"))
 
+    # Validate schema
+    try:
+        validated_brief = validate_brief(brief)
+        brief = validated_brief.dict()
+    except ValueError as e:
+        logger.log_error(client_id, f"Schema validation failed: {str(e)}", {"brief": brief})
+        raise HTTPException(status_code=400, detail=str(e))
+
     required = ["mode", "business_goal", "scope", "data_sources"]
     missing = [field for field in required if field not in brief]
     if missing:
         missing_text = ", ".join(missing)
+        logger.log_error(client_id, f"Missing fields: {missing_text}")
         raise HTTPException(status_code=400, detail=f"Missing required brief fields: {missing_text}")
 
     memory_file = Path(payload.memory_path)
@@ -140,11 +167,16 @@ def analyze(payload: AnalyzeRequest, x_api_key: Optional[str] = Header(default=N
 
     memory = read_json(memory_file) if memory_file.exists() else {}
 
+    # Log analysis start
+    logger.log_analysis_start(client_id, brief)
+
     try:
         report = run_analysis(brief=brief, memory=memory, root_dir=source_base)
     except (ValueError, FileNotFoundError) as exc:
+        logger.log_error(client_id, str(exc), {"type": "analysis_error"})
         raise HTTPException(status_code=400, detail=str(exc)) from exc
     except Exception as exc:
+        logger.log_error(client_id, str(exc), {"type": "unexpected_error"})
         raise HTTPException(status_code=500, detail=f"Unexpected analysis error: {exc}") from exc
 
     resolved_output_path: Optional[str] = None
@@ -158,6 +190,25 @@ def analyze(payload: AnalyzeRequest, x_api_key: Optional[str] = Header(default=N
     if payload.update_memory:
         updated = update_memory(memory, brief)
         write_json(memory_file, updated)
+
+    # Extract confidence from report for logging
+    confidence = 0
+    if "Confidence Score:" in report:
+        try:
+            conf_line = [line for line in report.split("\n") if "Confidence Score:" in line][0]
+            confidence = int(conf_line.split()[-1].rstrip("%"))
+        except:
+            confidence = 0
+
+    completeness = "Unknown"
+    if "Data Completeness" in report:
+        try:
+            comp_line = [line for line in report.split("\n") if "Data Completeness" in line][0]
+            completeness = comp_line.split(":")[-1].strip().split()[0]
+        except:
+            completeness = "Unknown"
+
+    logger.log_analysis_complete(client_id, confidence, completeness)
 
     return AnalyzeResponse(
         status="success",
