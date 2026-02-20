@@ -2,7 +2,7 @@
 const isDevelopment = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
 const apiBaseUrl = isDevelopment 
   ? "http://127.0.0.1:8000"
-  : "https://insightforge-api.onrender.com";  // Update this with your deployed backend URL
+  : "https://geekroomhackathon.up.railway.app";  // Update this with your deployed backend URL
 
 export const CONFIG = {
   API_BASE_URL: apiBaseUrl,
