@@ -114,6 +114,11 @@ def health() -> Dict[str, str]:
     return {"status": "ok"}
 
 
+@app.get("/")
+def root() -> Dict[str, str]:
+    return {"status": "ok", "service": "InsightForge API"}
+
+
 @app.get("/auth-status")
 def auth_status() -> Dict[str, bool]:
     return {"api_key_required": bool(API_KEY)}
