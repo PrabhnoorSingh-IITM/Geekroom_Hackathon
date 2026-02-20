@@ -221,8 +221,8 @@ body {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
-  max-height: calc(100vh - 120px);
-  min-height: 800px;
+  /* Instead of a max-height that clips, allow natural stretch but align items */
+  align-items: stretch;
 }
 
 .panel {
@@ -316,7 +316,8 @@ body {
 
 .form-label {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 12px;
   align-items: center;
   margin-bottom: 8px;
   font-size: 0.9rem;
@@ -550,7 +551,8 @@ body {
 .meter {
   width: 100%;
   height: 6px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
+  /* Darker track */
   border-radius: 3px;
   margin-top: 8px;
   overflow: hidden;
@@ -606,12 +608,54 @@ body {
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 16px;
-  padding: 20px;
+  padding: 24px;
   font-size: 0.95rem;
   line-height: 1.6;
-  max-height: 300px;
+  max-height: 400px;
   overflow-y: auto;
+  color: var(--text);
+  margin-top: 8px;
+}
+
+/* Style the markdown list items generated in the report */
+.report-box ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 12px;
+}
+
+.report-box ul li {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 8px;
   color: var(--muted);
+}
+
+.report-box ul li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* Custom scrollbar for dark theme panels */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* File Drop Zone */
@@ -841,10 +885,10 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px;
+  padding: 8px 12px;
   background: rgba(255, 255, 255, 0.03);
   border-radius: 8px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .status-dot {
@@ -967,8 +1011,36 @@ body {
     max-height: none;
   }
 
+  /* Force panels to fill the width when stacked */
+  .panel {
+    width: 100%;
+  }
+
   .steps-grid,
   .preview-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* Handle header wrapping on mobile */
+  .header {
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+  }
+
+  .header .brand {
+    flex-basis: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .header .main-nav {
+    flex-basis: 100%;
+    justify-content: center;
+    order: 3;
+    margin-top: 8px;
   }
 }
