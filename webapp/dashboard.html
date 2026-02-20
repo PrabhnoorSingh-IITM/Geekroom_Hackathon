@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - InsightForge</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+
+<body>
+    <!-- Custom Cursor Glow -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- Animated Background Orbs -->
+    <div class="bg-orbs" id="parallaxBg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="brand" style="text-decoration: none;">
+                <h1>
+                    <span>⚡</span>
+                    InsightForge
+                </h1>
+                <p>Intelligence Platform</p>
+            </a>
+
+            <nav class="main-nav" style="display: flex; gap: 24px; font-weight: 500;">
+                <a href="index.html"
+                    style="color: var(--text); text-decoration: none; opacity: 0.7; transition: opacity 0.3s;"
+                    onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">Home</a>
+                <a href="dashboard.html" style="color: var(--primary); text-decoration: none;">App</a>
+                <a href="about.html"
+                    style="color: var(--text); text-decoration: none; opacity: 0.7; transition: opacity 0.3s;"
+                    onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">The Story</a>
+            </nav>
+
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <a href="https://github.com/PrabhnoorSingh-IITM/InsightForge" target="_blank" class="github-link"
+                    title="Source Code">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                    </svg>
+                </a>
+                <div class="status-badges">
+                    <span id="healthBadge" class="badge">🟢 System</span>
+                    <span id="authBadge" class="badge">🟢 Auth</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard -->
+    <main class="container" id="dashboard" style="display: flex;">
+        <div class="dashboard-grid">
+            <!-- LEFT PANEL -->
+            <section class="panel panel-left">
+                <div class="panel-header">
+                    <h2>📋 Analysis Setup</h2>
+                    <p>What do you want to analyze?</p>
+                </div>
+
+                <!-- Product Name -->
+                <div class="form-section">
+                    <label class="form-label">
+                        <span class="label-text">What product?</span>
+                        <span class="label-hint">Name or SKU</span>
+                    </label>
+                    <input id="productInput" type="text" placeholder="e.g., Bluetooth Earbuds" class="input-primary" />
+                </div>
+
+                <!-- Analysis Mode -->
+                <div class="form-section">
+                    <label class="form-label">
+                        <span class="label-text">How detailed?</span>
+                        <span id="modeTime" class="label-hint">⚡ Quick = Fast</span>
+                    </label>
+                    <div class="mode-toggle">
+                        <label class="toggle-item">
+                            <input type="radio" name="mode" value="quick" checked />
+                            <span class="toggle-label">⚡ Quick<small>2 min</small></span>
+                        </label>
+                        <label class="toggle-item">
+                            <input type="radio" name="mode" value="deep" />
+                            <span class="toggle-label">🔍 Deep<small>10 min</small></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Business Goal -->
+                <div class="form-section">
+                    <label class="form-label">
+                        <span class="label-text">Your goal?</span>
+                        <span class="label-hint">What matters</span>
+                    </label>
+                    <div class="goal-buttons">
+                        <label class="goal-btn">
+                            <input type="radio" name="goal" value="growth" checked />
+                            <span>📈 Growth</span>
+                        </label>
+                        <label class="goal-btn">
+                            <input type="radio" name="goal" value="profitability" />
+                            <span>💰 Profit</span>
+                        </label>
+                        <label class="goal-btn">
+                            <input type="radio" name="goal" value="retention" />
+                            <span>❤️ Retention</span>
+                        </label>
+                        <label class="goal-btn">
+                            <input type="radio" name="goal" value="market expansion" />
+                            <span>🌍 Expand</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Location -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Marketplace</label>
+                        <input id="marketplace" type="text" placeholder="Amazon" class="input-small" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Region</label>
+                        <input id="region" type="text" placeholder="India" class="input-small" />
+                    </div>
+                </div>
+
+                <!-- Run Button -->
+                <div class="action-section">
+                    <button class="btn btn-primary btn-block" id="runBtn">
+                        <span class="btn-text">▶️ Run Analysis</span>
+                        <span class="spinner hidden"></span>
+                    </button>
+                    <button class="btn btn-secondary btn-block" id="demoBtn">Demo with Sample Data</button>
+                    <div id="configAlert" class="alert hidden"></div>
+                    <div id="configStatus" class="status-text"></div>
+                </div>
+            </section>
+
+            <!-- CENTER PANEL -->
+            <section class="panel panel-center">
+                <div class="panel-header">
+                    <h2>📊 Your Data</h2>
+                    <p>What we'll analyze</p>
+                </div>
+
+                <!-- Data Source Toggle -->
+                <div class="form-section">
+                    <label class="form-label">Data Mode</label>
+                    <div class="data-toggle">
+                        <label class="toggle-item">
+                            <input type="radio" name="dataMode" value="sample" checked />
+                            <span class="toggle-label">📦 Sample Data</span>
+                        </label>
+                        <label class="toggle-item">
+                            <input type="radio" name="dataMode" value="upload" />
+                            <span class="toggle-label">📁 Upload CSV</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- File Upload -->
+                <div id="uploadSection" class="form-section hidden">
+                    <label class="form-label">Upload Files</label>
+                    <div class="file-drop-zone" id="fileDropZone">
+                        <div class="file-drop-icon">📥</div>
+                        <p class="file-drop-text">Drag files or click to select</p>
+                        <small>CSV: catalog, reviews, pricing, competitors, performance</small>
+                        <input id="fileInput" type="file" accept=".csv" multiple hidden />
+                    </div>
+                    <div id="fileList" class="file-list"></div>
+                </div>
+
+                <!-- Dataset Status -->
+                <div class="form-section">
+                    <label class="form-label">Dataset Status</label>
+                    <div class="status-grid">
+                        <div class="status-item">
+                            <span class="status-dot ready">●</span>
+                            <span class="status-label">Catalog</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-dot ready">●</span>
+                            <span class="status-label">Reviews</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-dot ready">●</span>
+                            <span class="status-label">Pricing</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-dot ready">●</span>
+                            <span class="status-label">Competitors</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-dot ready">●</span>
+                            <span class="status-label">Performance</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Box -->
+                <div class="info-card">
+                    <h4>💡 How It Works</h4>
+                    <ul class="info-list">
+                        <li>🔍 Analyzes customer feedback</li>
+                        <li>💰 Compares pricing strategy</li>
+                        <li>📉 Finds market gaps</li>
+                        <li>⚠️ Flags business risks</li>
+                        <li>💡 Suggests next steps</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- RIGHT PANEL -->
+            <section class="panel panel-right">
+                <div class="panel-header">
+                    <h2>📈 Your Insights</h2>
+                    <p>What we found</p>
+                </div>
+
+                <!-- Metrics Cards -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value" id="confidenceScore">--</div>
+                        <div class="metric-label">Confidence</div>
+                        <span id="confidenceBadge" class="badge">--</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="completenessScore">--</div>
+                        <div class="metric-label">Data Quality</div>
+                        <div class="meter">
+                            <div id="completenessMeter" class="meter-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Risks -->
+                <div class="insight-section">
+                    <h3>⚠️ Key Risks</h3>
+                    <ul id="riskList" class="insight-list">
+                        <li class="placeholder">Run analysis to see risks</li>
+                    </ul>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="insight-section">
+                    <h3>💡 Next Steps</h3>
+                    <ul id="recommendations" class="insight-list highlight-list">
+                        <li class="placeholder">Run analysis to get recommendations</li>
+                    </ul>
+                </div>
+
+                <!-- Full Report -->
+                <div class="insight-section">
+                    <h3>📋 Full Report</h3>
+                    <div id="report" class="report-box">
+                        <p class="placeholder">Your detailed analysis will appear here...</p>
+                    </div>
+                </div>
+
+                <!-- Start Over Button -->
+                <button class="btn btn-secondary btn-block" id="newAnalysisBtn" style="display: none;">← Start New
+                    Analysis</button>
+            </section>
+        </div>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Scripts -->
+    <script type="module" src="config.js"></script>
+    <script type="module" src="api.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
+
+</html>

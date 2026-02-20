@@ -56,9 +56,9 @@ function initApp() {
   console.log("%c🔥 InsightForge Initializing...", "color:#41b883; font-weight:bold; font-size:14px");
 
   // Check if essential elements exist
+  // startBtn is only on index.html, dashboard is on dashboard.html
   if (!startBtn) {
-    console.error("❌ CRITICAL: startBtn not found. HTML structure may be broken.");
-    return;
+    console.warn("ℹ️ startBtn not found (Expected if not on index.html)");
   }
 
   // --- Intersection Observer for Storytelling Fade-ins ---
@@ -105,13 +105,12 @@ function initApp() {
 function setupEventListeners() {
   console.log("📍 Setting up event listeners...");
 
-  // Start button - PRIMARY
+  // Start button - PRIMARY (Only on index.html)
   if (startBtn) {
     startBtn.addEventListener("click", function (e) {
       console.log("✓ Start button clicked!");
-      e.preventDefault();
-      e.stopPropagation();
-      showDashboard();
+      // If we are on index, we might just link to dashboard.html instead now.
+      // E.g., handled via <a> tag, but keeping listener safe.
     });
   }
 
