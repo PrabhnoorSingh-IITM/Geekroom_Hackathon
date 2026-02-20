@@ -441,17 +441,17 @@ function displayMockResults() {
   if (confidenceBadge) confidenceBadge.textContent = "High";
 
   if (riskList) riskList.innerHTML = `
-    <li>⚠️ High market competition</li>
-    <li>📉 Below-average customer ratings</li>
-    <li>💰 Pricing above competitors</li>
-    <li>📦 Inventory constraints</li>
+    <li>High market competition</li>
+    <li>Below-average customer ratings</li>
+    <li>Pricing above competitors</li>
+    <li>Inventory constraints</li>
   `;
 
   if (recommendations) recommendations.innerHTML = `
-    <li>💡 Reduce price by 10% to be competitive</li>
-    <li>⭐ Improve product quality for better ratings</li>
-    <li>📢 Invest in customer testimonials</li>
-    <li>🚀 Launch seasonal campaigns</li>
+    <li>Reduce price by 10% to be competitive</li>
+    <li>Improve product quality for better ratings</li>
+    <li>Invest in customer testimonials</li>
+    <li>Launch seasonal campaigns</li>
   `;
 
   if (report) report.innerHTML = `
