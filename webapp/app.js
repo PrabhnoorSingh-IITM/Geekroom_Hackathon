@@ -262,8 +262,8 @@ async function checkAPIHealth() {
     console.warn("⚠️  API offline:", error.message);
     const healthBadge = getElement("healthBadge");
     if (healthBadge) {
-      healthBadge.textContent = "🟡 Mock Mode";
-      healthBadge.className = "badge pending"; // Optional styling class
+      healthBadge.className = "status-badge status-warning";
+      healthBadge.textContent = "🟡 API Offline";
     }
   }
 }
