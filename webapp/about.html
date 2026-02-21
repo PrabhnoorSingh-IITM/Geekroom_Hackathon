@@ -34,14 +34,16 @@
                 <p>Intelligence Platform</p>
             </a>
 
-            <nav class="main-nav" style="display: flex; gap: 24px; font-weight: 500;">
-                <a href="index.html"
-                    style="color: var(--text); text-decoration: none; opacity: 0.7; transition: opacity 0.3s;"
-                    onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">Home</a>
-                <a href="dashboard.html"
-                    style="color: var(--text); text-decoration: none; opacity: 0.7; transition: opacity 0.3s;"
-                    onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">App</a>
-                <a href="about.html" style="color: var(--primary); text-decoration: none;">The Story</a>
+            <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="main-nav" id="mainNav">
+                <a href="index.html">Home</a>
+                <a href="dashboard.html">App</a>
+                <a href="about.html" class="nav-active">The Story</a>
             </nav>
 
             <div style="display: flex; align-items: center; gap: 20px;">

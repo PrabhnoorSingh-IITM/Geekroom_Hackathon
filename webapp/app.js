@@ -28,6 +28,9 @@ const runBtn = getElement("runBtn");
 const demoBtn = getElement("demoBtn");
 const newAnalysisBtn = getElement("newAnalysisBtn");
 
+const mobileMenuBtn = getElement("mobileMenuBtn");
+const mainNav = getElement("mainNav");
+
 const productInput = getElement("productInput");
 const marketplace = getElement("marketplace");
 const region = getElement("region");
@@ -111,6 +114,14 @@ function setupEventListeners() {
       console.log("✓ Start button clicked!");
       // If we are on index, we might just link to dashboard.html instead now.
       // E.g., handled via <a> tag, but keeping listener safe.
+    });
+  }
+
+  // Mobile Menu Toggle
+  if (mobileMenuBtn && mainNav) {
+    mobileMenuBtn.addEventListener("click", () => {
+      mobileMenuBtn.classList.toggle("active");
+      mainNav.classList.toggle("active");
     });
   }
 
