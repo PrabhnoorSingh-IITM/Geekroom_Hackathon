@@ -66,7 +66,7 @@ Open your Firebase URL:
 https://insightforge-1.web.app
 ```
 
-Search for any product (e.g. "Smart Watches") and click "Generate Insights". Ensure the API Health Badge displays "🟢 API Online".
+Search for any product (e.g. "Smart Watches") and click "Generate Insights". Ensure the API Health Badge displays " API Online".
 
 Done.
 
@@ -151,4 +151,4 @@ firebase init hosting  # Run this first
 
 ---
 
-**You're live! 🎉**
+**You're live! **
