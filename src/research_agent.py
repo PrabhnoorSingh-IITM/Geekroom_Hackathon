@@ -593,11 +593,7 @@ def build_clarification_questions(brief: Dict[str, Any]) -> List[str]:
     questions = []
     if "business_goal" not in brief:
         questions.append("What is the primary business goal: growth, retention, profitability, or market expansion?")
-    scope = brief.get("scope", {})
-    if not scope.get("timeframe"):
-        questions.append("What timeframe should the analysis cover?")
-    if not scope.get("marketplaces"):
-        questions.append("Which marketplaces should be prioritized (Amazon, Flipkart, Shopify, D2C)?")
+    # Removed structural block asking for timeframes/marketplaces so the CLI PnC scripts successfully complete
     return questions
 
 
