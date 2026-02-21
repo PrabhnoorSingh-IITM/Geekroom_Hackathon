@@ -4,7 +4,7 @@ A step-by-step guide for non-technical users.
 
 ---
 
-##  Getting Started
+## 🚀 Getting Started
 
 ### What You'll See When You Open the Page
 
@@ -17,7 +17,7 @@ A step-by-step guide for non-technical users.
 
 ---
 
-##  The Three-Panel Dashboard
+## 💡 The Three-Panel Dashboard
 
 Once you click "Start Your Analysis", you'll see three panels:
 
@@ -127,7 +127,7 @@ Your insights and recommendations appear here.
 
 ---
 
-##  Real-World Example
+## 📋 Real-World Example
 
 ### Scenario: You Sell Wireless Earbuds on Amazon
 
@@ -145,15 +145,15 @@ Your insights and recommendations appear here.
 
 **You Get:**
 ```
-Confidence: 82% (High) 
+Confidence: 82% (High) ✓
 Completeness: 78% (Good)
 
- Risk Flags:
+🚨 Risk Flags:
 - Competitor pricing updated recently (monitor daily)
 - Limited review volume for budget models
 - Seasonal demand variance in Q4
 
- Strategic Recommendations:
+💡 Strategic Recommendations:
 1. Price positioning: Drop price to ₹3,499 (match competitor XYZ)
 2. Review generation: Incentivize 5-star reviews (currently 4.1 avg)
 3. Feature focus: Highlight 6-hour battery (vs 4-hour average)
@@ -164,7 +164,7 @@ Full Report: [Detailed 3-page analysis...]
 
 ---
 
-##  Quick Tips
+## ⚡ Quick Tips
 
 ### For Fastest Results
 - Use **Quick Mode** + **Sample Data**
@@ -199,7 +199,7 @@ Full Report: [Detailed 3-page analysis...]
 
 ---
 
-##  Typical Workflows
+## 🎯 Typical Workflows
 
 ### Workflow 1: Quick Competitive Check (5 minutes)
 1. Load demo data
@@ -225,7 +225,7 @@ Full Report: [Detailed 3-page analysis...]
 
 ---
 
-##  Privacy & Data
+## 🔐 Privacy & Data
 
 - **No API key needed** – Direct connection to your local API
 - **Data stays local** – No cloud uploads unless you choose
@@ -234,7 +234,7 @@ Full Report: [Detailed 3-page analysis...]
 
 ---
 
-##  Support Tips
+## 📞 Support Tips
 
 ### Before Asking for Help
 1. Check your data columns match expected names
@@ -250,7 +250,7 @@ Full Report: [Detailed 3-page analysis...]
 
 ---
 
-##  Understanding the Science Behind the Agent
+## 🎓 Understanding the Science Behind the Agent
 
 **How the Agent Works:**
 
@@ -276,7 +276,7 @@ Full Report: [Detailed 3-page analysis...]
 
 ---
 
-##  Advanced: Using the Demo
+## 🚀 Advanced: Using the Demo
 
 Click **"Load Demo Values"** to automatically fill in an example about Bluetooth Earbuds. This is perfect for:
 - Testing the system before uploading your data
@@ -288,4 +288,4 @@ The demo uses pre-loaded sample data that represents a realistic e-commerce scen
 
 ---
 
-**Ready to get started?** Click "Start Your Analysis" above and choose your analysis parameters. The agent will handle the rest! 
+**Ready to get started?** Click "Start Your Analysis" above and choose your analysis parameters. The agent will handle the rest! 🎉
