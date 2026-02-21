@@ -248,14 +248,14 @@ async function checkAPIHealth() {
   try {
     const response = await fetch(`${CONFIG.API_BASE_URL}/health`, {
       method: "GET",
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json", "Bypass-Tunnel-Reminder": "true" }
     });
     const data = await response.json();
     console.log("✅ API OK:", data);
 
     const healthBadge = getElement("healthBadge");
     if (healthBadge) {
-      healthBadge.textContent = "🟢 API";
+      healthBadge.textContent = "🟢 API Online";
       healthBadge.className = "badge active";
     }
   } catch (error) {
@@ -366,7 +366,7 @@ async function callAPI(brief) {
   console.log("🔄 Calling API...");
   const response = await fetch(`${CONFIG.API_BASE_URL}/analyze`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "Bypass-Tunnel-Reminder": "true" },
     body: JSON.stringify(brief),
   });
 

@@ -4,7 +4,7 @@
 
 // Environment detection
 // Railway production API is currently offline/404, default forcing the live traffic to the localhost Python uvicorn instance
-const apiBaseUrl = "http://127.0.0.1:8000";
+const apiBaseUrl = "https://stale-kiwis-knock.loca.lt";
 
 export const CONFIG = {
   // API Configuration
