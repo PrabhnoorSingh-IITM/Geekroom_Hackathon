@@ -1,17 +1,17 @@
 # InsightForge
 
-Hey, welcome to InsightForge. I built this e-commerce intelligence research agent to help teams make sense of fragmented data—catalogs, reviews, pricing, and competitor listings—and turn them into actionable business decisions.
+InsightForge is an e-commerce intelligence research agent designed to help teams synthesize fragmented data across catalogs, reviews, pricing, and competitor listings into strategic business decisions.
 
-Instead of staring at basic up-and-down charts, you can give InsightForge a brief, upload your data (or use the provided samples), and get a structured, strategic report. Quick mode gives you fast answers in seconds, while deep mode takes a bit longer to provide a comprehensive strategy.
+By analyzing raw data inputs, InsightForge generates comprehensive, evidence-based reports. The system offers a "Quick" mode for rapid insights and a "Deep" mode for comprehensive strategic analysis, eliminating the need to manually interpret basic metrics.
 
-## Features
+## Key Features
 
-- Quick mode for fast answers and Deep mode for strategy
-- Actionable recommendations based on hard evidence
-- Data completeness checks to flag noise
-- Persistent memory so it learns over time
-- Fully functioning API built with FastAPI
-- Web dashboard for easy interaction
+- Quick mode for rapid insights and Deep mode for comprehensive strategy analysis.
+- Actionable business recommendations based on evidence-backed data synthesis.
+- Automated data completeness checks and noise detection.
+- Persistent memory to adapt to user preferences over time.
+- Fully functional API built with FastAPI.
+- Interactive web dashboard for streamlined use.
 
 ## Project Structure
 
@@ -21,11 +21,9 @@ Instead of staring at basic up-and-down charts, you can give InsightForge a brie
 - `data/domain_memory.json`: Where the agent's memory is stored
 - `datasets/`: Processed datasets for sample runs
 
-## How to Run It
+### 1. API Backend Setup
 
-### 1. Set up the API
-
-First, install the dependencies:
+Install the required dependencies:
 
 ```bash
 pip install -r requirements.txt
@@ -75,9 +73,9 @@ git lfs install
 git lfs pull
 ```
 
-## Production Details
+## Production Configuration
 
-The API has a built-in rate limiter (30 requests per minute) and structured logging. You can also enable API key authentication by setting the `ECOM_AGENT_API_KEY` environment variable.
+The API includes a built-in rate limiter (30 requests per minute) and structured logging. API key authentication can be enabled by setting the `ECOM_AGENT_API_KEY` environment variable.
 
 ## License
 
