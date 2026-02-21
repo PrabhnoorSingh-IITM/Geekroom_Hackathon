@@ -123,12 +123,13 @@ function setupEventListeners() {
     });
   }
 
-  // Demo button
-  if (demoBtn) {
-    demoBtn.addEventListener("click", function (e) {
-      console.log("✓ Demo button clicked!");
+  // Advanced Settings Toggle
+  const advancedToggleBtn = getElement("advancedToggleBtn");
+  const advancedSettings = getElement("advancedSettings");
+  if (advancedToggleBtn && advancedSettings) {
+    advancedToggleBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      handleDemoData();
+      advancedSettings.classList.toggle("hidden");
     });
   }
 
@@ -208,13 +209,17 @@ function resetToDashboard() {
   if (productInput) productInput.value = "";
   if (marketplace) marketplace.value = "";
   if (region) region.value = "";
-  if (fileList) fileList.innerHTML = "";
-  appState.uploadedFiles = [];
+
+  const searchHero = getElement("searchHero");
+  const resultsContainer = getElement("resultsContainer");
+
+  if (searchHero) searchHero.classList.remove("active-search");
+  if (resultsContainer) resultsContainer.classList.add("hidden");
 
   if (newAnalysisBtn) newAnalysisBtn.style.display = "none";
-  if (riskList) riskList.innerHTML = '<li class="placeholder">Run analysis to see risks</li>';
-  if (recommendations) recommendations.innerHTML = '<li class="placeholder">Run analysis to get recommendations</li>';
-  if (report) report.innerHTML = '<p class="placeholder">Your detailed analysis will appear here...</p>';
+  if (riskList) riskList.innerHTML = '<li class="placeholder">Awaiting analysis...</li>';
+  if (recommendations) recommendations.innerHTML = '<li class="placeholder">Awaiting analysis...</li>';
+  if (report) report.innerHTML = '<p class="placeholder">Analysis report will appear here...</p>';
   if (confidenceScore) confidenceScore.textContent = "--";
   if (completenessScore) completenessScore.textContent = "--";
   if (completenessMeter) completenessMeter.style.width = "0%";
@@ -283,43 +288,7 @@ function displayFileList() {
 // ANALYSIS
 // ====================================
 
-async function handleDemoData() {
-  console.log("🎬 Running demo...");
 
-  if (productInput) productInput.value = "Bluetooth Earbuds";
-  if (marketplace) marketplace.value = "Amazon";
-  if (region) region.value = "India";
-
-  setStatus("Loading sample analysis...");
-  setLoading(true);
-
-  try {
-    const brief = {
-      product_name: "Bluetooth Earbuds",
-      scope_type: "SKU",
-      business_goal: "growth",
-      scope_value: "SKU-472",
-      mode: document.querySelector('input[name="mode"]:checked')?.value || "quick",
-      marketplace: "Amazon",
-      region: "India"
-    };
-
-    const result = await callAPI(brief);
-    displayResults(result);
-    setStatus("✅ Demo complete!");
-    showToast("✅ Demo analysis complete!", "success");
-    if (newAnalysisBtn) newAnalysisBtn.style.display = "block";
-    scrollToTop();
-  } catch (error) {
-    console.warn("Demo API unreachable, using mock data...", error);
-    setStatus("✅ Demo complete (Mock Data)");
-    displayMockResults();
-    if (newAnalysisBtn) newAnalysisBtn.style.display = "block";
-    scrollToTop();
-  } finally {
-    setLoading(false);
-  }
-}
 
 async function handleRunAnalysis() {
   console.log("🔍 Running analysis...");
@@ -328,6 +297,12 @@ async function handleRunAnalysis() {
     showToast("Please enter a product name", "error");
     return;
   }
+
+  // Trigger UI transition for minimal layout
+  const searchHero = getElement("searchHero");
+  const resultsContainer = getElement("resultsContainer");
+  if (searchHero) searchHero.classList.add("active-search");
+  if (resultsContainer) resultsContainer.classList.remove("hidden");
 
   setStatus("Running analysis...");
   setLoading(true);
