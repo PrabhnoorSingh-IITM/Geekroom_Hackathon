@@ -7,8 +7,6 @@ import { CONFIG } from "./config.js";
 let appState = {
   isDashboardVisible: false,
   analysisRunning: false,
-  currentAnalysis: null,
-  uploadedFiles: [],
 };
 
 // ====================================
@@ -276,19 +274,19 @@ async function checkAPIHealth() {
 
 function handleFiles(files) {
   console.log(`📁 ${files.length} file(s) selected`);
-  appState.uploadedFiles = Array.from(files);
+  // appState.uploadedFiles = Array.from(files); // Removed as per new appState
   displayFileList();
 }
 
 function displayFileList() {
   if (!fileList) return;
   fileList.innerHTML = "";
-  appState.uploadedFiles.forEach((file, index) => {
-    const item = document.createElement("div");
-    item.className = "file-item";
-    item.innerHTML = `<span>📄 ${file.name} (${(file.size / 1024).toFixed(1)}KB)</span>`;
-    fileList.appendChild(item);
-  });
+  // appState.uploadedFiles.forEach((file, index) => { // Removed as per new appState
+  //   const item = document.createElement("div");
+  //   item.className = "file-item";
+  //   item.innerHTML = `<span>📄 ${file.name} (${(file.size / 1024).toFixed(1)}KB)</span>`;
+  //   fileList.appendChild(item);
+  // });
 }
 
 // ====================================
@@ -345,25 +343,11 @@ async function handleRunAnalysis() {
     scrollToTop();
   } catch (error) {
     console.warn("Analysis API unreachable or failed:", error);
-    if (!CONFIG.USE_MOCK_DATA_FALLBACK) {
-      setStatus(`❌ ${error.message}`);
-      showToast(error.message, "error");
-      setLoading(false);
-      appState.analysisRunning = false;
-    }
+    setStatus(`❌ ${error.message}`);
+    showToast(error.message, "error");
   } finally {
-    if (CONFIG.USE_MOCK_DATA_FALLBACK) {
-      setStatus("⚠️ API Offline - Loaded Mock Data");
-      showToast("API Offline. Loaded mock analysis.", "warning");
-      // Pass the parsed brief parameters directly to ensure accuracy
-      const brief = {
-        product_name: productInput?.value?.trim() || "Product",
-        business_goal: document.querySelector('input[name="goal"]:checked')?.value || "growth",
-        mode: document.querySelector('input[name="mode"]:checked')?.value || "quick",
-      };
-      displayMockResults(brief);
-      if (newAnalysisBtn) newAnalysisBtn.style.display = "block";
-    }
+    setLoading(false);
+    appState.analysisRunning = false;
   }
 }
 
@@ -420,71 +404,6 @@ function displayResults(result) {
       report.textContent = reportContent;
     }
   }
-}
-
-function displayMockResults(brief) {
-  console.log("🎭 Showing mock results...");
-
-  setLoading(true);
-  setStatus("Analyzing data (Mock Mode)...");
-
-  // Simulate API delay
-  setTimeout(() => {
-    const isDeep = brief?.mode === "deep";
-    const goal = brief?.business_goal || "growth";
-    const product = brief?.product_name || "Product";
-
-    // Dynamic metrics
-    const confScore = isDeep ? Math.floor(Math.random() * 15) + 85 : Math.floor(Math.random() * 20) + 60;
-    const completeness = isDeep ? Math.floor(Math.random() * 10) + 90 : Math.floor(Math.random() * 20) + 70;
-
-    if (confidenceScore) confidenceScore.textContent = `${confScore}%`;
-    if (completenessScore) completenessScore.textContent = `${completeness}%`;
-    if (completenessMeter) completenessMeter.style.width = `${completeness}%`;
-    if (confidenceBadge) confidenceBadge.textContent = confScore >= 80 ? "High" : confScore >= 60 ? "Medium" : "Low";
-
-    // Dynamic Risks based on goal
-    let risks = [];
-    let recs = [];
-    if (goal === "profitability") {
-      risks = ["Excessive ad spend", "Low margin variants selling most", "High return rates"];
-      recs = ["Increase price by 5%", "Bundle accessories", "Cut bottom 20% of ad targets"];
-    } else if (goal === "retention") {
-      risks = ["Negative reviews on durability", "Low repeat purchase rate", "Strong competitor loyalty programs"];
-      recs = ["Launch email follow-up sequence", "Improve unboxing experience", "Address QA issues in manufacturing"];
-    } else {
-      risks = ["High market competition", "Below-average visibility", "Pricing above market average"];
-      recs = ["Optimize listing keywords", "Run aggressive promotional campaign", "Enhance product imagery"];
-    }
-
-    if (riskList) riskList.innerHTML = risks.map(r => `<li>${r}</li>`).join("");
-    if (recommendations) recommendations.innerHTML = recs.map(r => `<li>${r}</li>`).join("");
-
-    if (report) {
-      report.innerHTML = `
-        <h4>📋 Analysis Report: ${product}</h4>
-        <p><strong>Goal Alignment:</strong> ${goal.toUpperCase()}</p>
-        <p><strong>Mode:</strong> ${isDeep ? "Deep Dive" : "Quick Pulse"}</p>
-        <h4>Key Metrics</h4>
-        <ul>
-          <li>Market share estimation: ${Math.floor(Math.random() * 30) + 5}%</li>
-          <li>Customer satisfaction: ${(Math.random() * 1.5 + 3.5).toFixed(1)}/5</li>
-          <li>Price position: ${Math.random() > 0.5 ? 'Upper' : 'Mid'} tier</li>
-          <li>Competitor count: ${Math.floor(Math.random() * 50) + 10}</li>
-        </ul>
-        <p><em>This is a generated mock response. Connect the live Intelligence API for real data parameters.</em></p>
-      `;
-    }
-
-    setLoading(false);
-    setStatus("✅ Mock Analysis complete!");
-    showToast("Mock Analysis complete.", "success");
-
-    // Ensure the results container is visible
-    const resultsContainer = getElement("resultsContainer");
-    if (resultsContainer) resultsContainer.classList.remove("hidden");
-    scrollToTop();
-  }, 1500); // 1.5 second simulated delay
 }
 
 // ====================================

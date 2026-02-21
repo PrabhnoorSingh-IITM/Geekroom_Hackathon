@@ -297,8 +297,13 @@ def score_confidence(
     evidence_score = min(100, int(evidence_volume * 2))
 
     base = int((0.65 * completeness_score) + (0.35 * evidence_score))
-    penalty = min(30, len(noise_flags) * 8)
-    final = max(15, base - penalty)
+    penalty = min(20, len(noise_flags) * 5)
+    
+    # Increase the floor dynamically based on available sources rather than a hard 15%
+    loaded_sources = sum(1 for payload in payloads.values() if payload.records)
+    dynamic_floor = max(15, 30 + (loaded_sources * 8))
+    
+    final = max(dynamic_floor, base - penalty)
     return min(100, final)
 
 
