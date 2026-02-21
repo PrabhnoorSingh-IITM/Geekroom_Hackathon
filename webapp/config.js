@@ -3,13 +3,8 @@
 // ====================================
 
 // Environment detection
-const isDevelopment = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-
-// API Base URL
-// If running locally, assume the backend is on port 8000 and frontend is 5500/8000
-const apiBaseUrl = isDevelopment
-  ? "http://127.0.0.1:8000"
-  : "https://geekroomhackathon.up.railway.app";
+// Railway production API is currently offline/404, default forcing the live traffic to the localhost Python uvicorn instance
+const apiBaseUrl = "http://127.0.0.1:8000";
 
 export const CONFIG = {
   // API Configuration
