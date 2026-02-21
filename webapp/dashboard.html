@@ -60,71 +60,68 @@
         </div>
     </header>
 
-    <!-- Main Dashboard -->
-    <main class="container" id="dashboard" style="display: flex;">
-        <div class="dashboard-grid">
-            <!-- LEFT PANEL -->
-            <section class="panel panel-left">
-                <div class="panel-header">
-                    <h2>📋 Analysis Setup</h2>
-                    <p>What do you want to analyze?</p>
-                </div>
+    <!-- Main Dashboard Minimalist Redesign -->
+    <main class="container minimal-layout" id="dashboard">
+        <!-- Center Search Area -->
+        <div class="search-hero" id="searchHero">
+            <h2 class="search-title">What product do you want to analyze?</h2>
 
-                <!-- Product Name -->
-                <div class="form-section">
-                    <label class="form-label">
-                        <span class="label-text">What product?</span>
-                        <span class="label-hint">Name or SKU</span>
-                    </label>
-                    <input id="productInput" type="text" placeholder="e.g., Bluetooth Earbuds" class="input-primary" />
-                </div>
+            <div class="search-box-wrapper">
+                <input id="productInput" type="text" placeholder="e.g., Bluetooth Earbuds" class="search-input"
+                    autocomplete="off" />
+                <button class="btn btn-primary search-btn" id="runBtn">
+                    <span class="btn-text">Generate Insights</span>
+                    <span class="spinner hidden"></span>
+                </button>
+            </div>
 
-                <!-- Analysis Mode -->
-                <div class="form-section">
-                    <label class="form-label">
-                        <span class="label-text">How detailed?</span>
-                        <span id="modeTime" class="label-hint">⚡ Quick = Fast</span>
-                    </label>
-                    <div class="mode-toggle">
-                        <label class="toggle-item">
-                            <input type="radio" name="mode" value="quick" checked />
-                            <span class="toggle-label">⚡ Quick<small>2 min</small></span>
-                        </label>
-                        <label class="toggle-item">
-                            <input type="radio" name="mode" value="deep" />
-                            <span class="toggle-label">🔍 Deep<small>10 min</small></span>
-                        </label>
+            <div id="configAlert" class="alert hidden"></div>
+            <div id="configStatus" class="status-text"></div>
+
+            <button id="advancedToggleBtn" class="btn-link advanced-toggle">⚙️ Advanced Options</button>
+
+            <div id="advancedSettings" class="advanced-settings hidden">
+                <div class="settings-grid">
+                    <!-- Analysis Mode -->
+                    <div class="form-section">
+                        <label class="form-label">How detailed?</label>
+                        <div class="mode-toggle">
+                            <label class="toggle-item">
+                                <input type="radio" name="mode" value="quick" checked />
+                                <span class="toggle-label">⚡ Quick<small>2 min</small></span>
+                            </label>
+                            <label class="toggle-item">
+                                <input type="radio" name="mode" value="deep" />
+                                <span class="toggle-label">🔍 Deep<small>10 min</small></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Business Goal -->
+                    <div class="form-section">
+                        <label class="form-label">Your goal?</label>
+                        <div class="goal-buttons">
+                            <label class="goal-btn">
+                                <input type="radio" name="goal" value="growth" checked />
+                                <span>📈 Growth</span>
+                            </label>
+                            <label class="goal-btn">
+                                <input type="radio" name="goal" value="profitability" />
+                                <span>💰 Profit</span>
+                            </label>
+                            <label class="goal-btn">
+                                <input type="radio" name="goal" value="retention" />
+                                <span>❤️ Retention</span>
+                            </label>
+                            <label class="goal-btn">
+                                <input type="radio" name="goal" value="market expansion" />
+                                <span>🌍 Expand</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Business Goal -->
-                <div class="form-section">
-                    <label class="form-label">
-                        <span class="label-text">Your goal?</span>
-                        <span class="label-hint">What matters</span>
-                    </label>
-                    <div class="goal-buttons">
-                        <label class="goal-btn">
-                            <input type="radio" name="goal" value="growth" checked />
-                            <span>📈 Growth</span>
-                        </label>
-                        <label class="goal-btn">
-                            <input type="radio" name="goal" value="profitability" />
-                            <span>💰 Profit</span>
-                        </label>
-                        <label class="goal-btn">
-                            <input type="radio" name="goal" value="retention" />
-                            <span>❤️ Retention</span>
-                        </label>
-                        <label class="goal-btn">
-                            <input type="radio" name="goal" value="market expansion" />
-                            <span>🌍 Expand</span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Location -->
-                <div class="form-row">
+                <div class="form-row" style="margin-top: 16px;">
                     <div class="form-group">
                         <label class="form-label">Marketplace</label>
                         <input id="marketplace" type="text" placeholder="Amazon" class="input-small" />
@@ -134,144 +131,56 @@
                         <input id="region" type="text" placeholder="India" class="input-small" />
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <!-- Run Button -->
-                <div class="action-section">
-                    <button class="btn btn-primary btn-block" id="runBtn">
-                        <span class="btn-text">▶️ Run Analysis</span>
-                        <span class="spinner hidden"></span>
-                    </button>
-                    <button class="btn btn-secondary btn-block" id="demoBtn">Demo with Sample Data</button>
-                    <div id="configAlert" class="alert hidden"></div>
-                    <div id="configStatus" class="status-text"></div>
+        <!-- Vertical Results Stream -->
+        <div id="resultsContainer" class="results-container hidden">
+            <!-- Metrics Cards -->
+            <div class="metrics-grid minimal-metrics">
+                <div class="metric-card minimal-card">
+                    <div class="metric-value" id="confidenceScore">--</div>
+                    <div class="metric-label">Confidence</div>
+                    <span id="confidenceBadge" class="badge">--</span>
                 </div>
-            </section>
-
-            <!-- CENTER PANEL -->
-            <section class="panel panel-center">
-                <div class="panel-header">
-                    <h2>📊 Your Data</h2>
-                    <p>What we'll analyze</p>
-                </div>
-
-                <!-- Data Source Toggle -->
-                <div class="form-section">
-                    <label class="form-label">Data Mode</label>
-                    <div class="data-toggle">
-                        <label class="toggle-item">
-                            <input type="radio" name="dataMode" value="sample" checked />
-                            <span class="toggle-label">📦 Sample Data</span>
-                        </label>
-                        <label class="toggle-item">
-                            <input type="radio" name="dataMode" value="upload" />
-                            <span class="toggle-label">📁 Upload CSV</span>
-                        </label>
+                <div class="metric-card minimal-card">
+                    <div class="metric-value" id="completenessScore">--</div>
+                    <div class="metric-label">Data Quality</div>
+                    <div class="meter">
+                        <div id="completenessMeter" class="meter-fill"></div>
                     </div>
                 </div>
+            </div>
 
-                <!-- File Upload -->
-                <div id="uploadSection" class="form-section hidden">
-                    <label class="form-label">Upload Files</label>
-                    <div class="file-drop-zone" id="fileDropZone">
-                        <div class="file-drop-icon">📥</div>
-                        <p class="file-drop-text">Drag files or click to select</p>
-                        <small>CSV: catalog, reviews, pricing, competitors, performance</small>
-                        <input id="fileInput" type="file" accept=".csv" multiple hidden />
-                    </div>
-                    <div id="fileList" class="file-list"></div>
+            <!-- Key Risks -->
+            <div class="insight-section minimal-section">
+                <h3>⚠️ Key Risks</h3>
+                <ul id="riskList" class="insight-list">
+                    <li class="placeholder">Analyzing...</li>
+                </ul>
+            </div>
+
+            <!-- Recommendations -->
+            <div class="insight-section minimal-section">
+                <h3>💡 Next Steps</h3>
+                <ul id="recommendations" class="insight-list highlight-list">
+                    <li class="placeholder">Analyzing...</li>
+                </ul>
+            </div>
+
+            <!-- Full Report -->
+            <div class="insight-section minimal-section">
+                <h3>📋 Full Report</h3>
+                <div id="report" class="report-box minimal-box">
+                    <p class="placeholder">Analysis report will appear here...</p>
                 </div>
+            </div>
 
-                <!-- Dataset Status -->
-                <div class="form-section">
-                    <label class="form-label">Dataset Status</label>
-                    <div class="status-grid">
-                        <div class="status-item">
-                            <span class="status-dot ready">●</span>
-                            <span class="status-label">Catalog</span>
-                        </div>
-                        <div class="status-item">
-                            <span class="status-dot ready">●</span>
-                            <span class="status-label">Reviews</span>
-                        </div>
-                        <div class="status-item">
-                            <span class="status-dot ready">●</span>
-                            <span class="status-label">Pricing</span>
-                        </div>
-                        <div class="status-item">
-                            <span class="status-dot ready">●</span>
-                            <span class="status-label">Competitors</span>
-                        </div>
-                        <div class="status-item">
-                            <span class="status-dot ready">●</span>
-                            <span class="status-label">Performance</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Info Box -->
-                <div class="info-card">
-                    <h4>💡 How It Works</h4>
-                    <ul class="info-list">
-                        <li>🔍 Analyzes customer feedback</li>
-                        <li>💰 Compares pricing strategy</li>
-                        <li>📉 Finds market gaps</li>
-                        <li>⚠️ Flags business risks</li>
-                        <li>💡 Suggests next steps</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- RIGHT PANEL -->
-            <section class="panel panel-right">
-                <div class="panel-header">
-                    <h2>📈 Your Insights</h2>
-                    <p>What we found</p>
-                </div>
-
-                <!-- Metrics Cards -->
-                <div class="metrics-grid">
-                    <div class="metric-card">
-                        <div class="metric-value" id="confidenceScore">--</div>
-                        <div class="metric-label">Confidence</div>
-                        <span id="confidenceBadge" class="badge">--</span>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value" id="completenessScore">--</div>
-                        <div class="metric-label">Data Quality</div>
-                        <div class="meter">
-                            <div id="completenessMeter" class="meter-fill"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Key Risks -->
-                <div class="insight-section">
-                    <h3>⚠️ Key Risks</h3>
-                    <ul id="riskList" class="insight-list">
-                        <li class="placeholder">Run analysis to see risks</li>
-                    </ul>
-                </div>
-
-                <!-- Recommendations -->
-                <div class="insight-section">
-                    <h3>💡 Next Steps</h3>
-                    <ul id="recommendations" class="insight-list highlight-list">
-                        <li class="placeholder">Run analysis to get recommendations</li>
-                    </ul>
-                </div>
-
-                <!-- Full Report -->
-                <div class="insight-section">
-                    <h3>📋 Full Report</h3>
-                    <div id="report" class="report-box">
-                        <p class="placeholder">Your detailed analysis will appear here...</p>
-                    </div>
-                </div>
-
-                <!-- Start Over Button -->
-                <button class="btn btn-secondary btn-block" id="newAnalysisBtn" style="display: none;">← Start New
+            <!-- Start Over Button -->
+            <div style="text-align: center; margin-top: 32px;">
+                <button class="btn btn-secondary" id="newAnalysisBtn" style="display: none; margin: 0 auto;">← Start New
                     Analysis</button>
-            </section>
+            </div>
         </div>
     </main>
 
