@@ -67,8 +67,9 @@
                     Intelligence</h2>
                 <p
                     style="font-size: 1.25rem; color: var(--muted); max-width: 800px; margin: 0 auto 60px; line-height: 1.6;">
-                    E-commerce teams are drowning in tabular data. Dashboards show metrics but rarely explain
-                    <em>why</em>. Our solution brings context, reasoning, and domain knowledge to raw numbers.
+                    Today, e-commerce brands are facing a critical bottleneck. They are drowning in data, but starving
+                    for intelligence. Simply looking at metrics across five different dashboards doesn't solve
+                    problems—it creates them.
                 </p>
             </div>
 
@@ -80,9 +81,10 @@
                     <div class="card-icon" style="font-size: 2.5rem; margin-bottom: 16px;">⚠️</div>
                     <h3 style="font-size: 1.8rem; margin-bottom: 16px;">The Problem</h3>
                     <p style="color: var(--muted); line-height: 1.7; font-size: 1.1rem;">
-                        Fragmented commerce data leads to slow decision-making. You have catalogs, reviews, competitor
-                        prices, and performance metrics—all siloed in different systems. Synthesizing this manually
-                        takes hours, delaying critical pricing and inventory moves.
+                        Every day, sellers generate thousands of data points across disconnected platforms: massive
+                        catalogs, scattered customer reviews, fluctuating competitor pricing, and isolated performance
+                        metrics. When sales suddenly drop, it takes analysts weeks to manually synthesize this data to
+                        isolate the root cause. By the time they figure it out, the revenue is already lost.
                     </p>
                 </div>
 
@@ -92,9 +94,11 @@
                     <div class="card-icon" style="font-size: 2.5rem; margin-bottom: 16px;">💡</div>
                     <h3 style="font-size: 1.8rem; margin-bottom: 16px; color: var(--primary);">The Solution</h3>
                     <p style="color: var(--text); line-height: 1.7; font-size: 1.1rem;">
-                        InsightForge acts as a unified reasoning engine. We ingest clean multi-source JSON files, apply
-                        memory-augmented prompt engineering, and instruct LLMs to act as domain-specific research
-                        analysts, outputting actionable markdown reports.
+                        InsightForge replaces the chaotic traditional dashboard with an autonomous, AI-driven
+                        intelligence engine. Utilizing advanced prompt engineering, the agent cross-references
+                        everything. It automatically calculates the correlation between negative review sentiments and
+                        return rates, isolates uncompetitive pricing margins, and highlights critical missing product
+                        features!
                     </p>
                 </div>
             </div>
@@ -158,35 +162,31 @@
                 style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; max-width: 900px; margin: 0 auto;">
                 <div class="tech-item"
                     style="padding: 16px 32px; background: var(--card); border: 1px solid var(--line); border-radius: 100px; font-weight: 500;">
-                    <span style="margin-right: 8px;">🐍</span>Python 3.10+
+                    <span style="margin-right: 8px;">🐍</span>Python 3.10+ (Pandas & Numpy)
                 </div>
                 <div class="tech-item"
                     style="padding: 16px 32px; background: var(--card); border: 1px solid var(--line); border-radius: 100px; font-weight: 500;">
-                    <span style="margin-right: 8px;">⚡</span>FastAPI
+                    <span style="margin-right: 8px;">⚡</span>FastAPI w/ Uvicorn
                 </div>
                 <div class="tech-item"
                     style="padding: 16px 32px; background: var(--card); border: 1px solid var(--line); border-radius: 100px; font-weight: 500;">
-                    <span style="margin-right: 8px;">🌐</span>Vanilla JS
+                    <span style="margin-right: 8px;">🌐</span>Vanilla JS (ES6/PapaParse/html2pdf)
                 </div>
                 <div class="tech-item"
                     style="padding: 16px 32px; background: var(--card); border: 1px solid var(--line); border-radius: 100px; font-weight: 500;">
-                    <span style="margin-right: 8px;">🎨</span>CSS3 (Glassmorphism)
+                    <span style="margin-right: 8px;">🎨</span>Vanilla CSS3 (Glassmorphism)
                 </div>
                 <div class="tech-item"
                     style="padding: 16px 32px; background: var(--card); border: 1px solid var(--line); border-radius: 100px; font-weight: 500;">
-                    <span style="margin-right: 8px;">🐳</span>Docker
+                    <span style="margin-right: 8px;">🚂</span>Railway Backend Hosting
                 </div>
                 <div class="tech-item"
                     style="padding: 16px 32px; background: var(--card); border: 1px solid var(--line); border-radius: 100px; font-weight: 500;">
-                    <span style="margin-right: 8px;">🚂</span>Railway
-                </div>
-                <div class="tech-item"
-                    style="padding: 16px 32px; background: var(--card); border: 1px solid var(--line); border-radius: 100px; font-weight: 500;">
-                    <span style="margin-right: 8px;">🔥</span>Firebase
+                    <span style="margin-right: 8px;">🔥</span>Firebase App Hosting
                 </div>
                 <div class="tech-item"
                     style="padding: 16px 32px; background: linear-gradient(135deg, rgba(var(--primary-rgb),0.1), var(--card)); border: 1px solid var(--primary); color: var(--primary); border-radius: 100px; font-weight: 600;">
-                    <span style="margin-right: 8px;">🤖</span>LLM Integration
+                    <span style="margin-right: 8px;">🤖</span>Autonomous AI Reasoner
                 </div>
             </div>
         </section>
@@ -208,10 +208,10 @@
                         style="width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: #000; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; flex-shrink: 0;">
                         1</div>
                     <div>
-                        <h4 style="font-size: 1.4rem; margin-bottom: 8px;">Data Ingestion (`datasets/raw`)</h4>
-                        <p style="color: var(--muted); line-height: 1.6;">Multiple CSV/JSON files (catalog, reviews,
-                            pricing, signals) are parsed and normalized into a standard taxonomy to ensure structural
-                            integrity before analysis.</p>
+                        <h4 style="font-size: 1.4rem; margin-bottom: 8px;">Data Search & Ingestion</h4>
+                        <p style="color: var(--muted); line-height: 1.6;">You don't configure complex graphs; you simply
+                            tell InsightForge what product you want to analyze or upload your Custom CSV. We fetch and
+                            align catalogs, reviews, competitor prices, and performance metrics.</p>
                     </div>
                 </div>
 
@@ -221,10 +221,11 @@
                         style="width: 50px; height: 50px; border-radius: 50%; background: #00d4ff; color: #000; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; flex-shrink: 0;">
                         2</div>
                     <div>
-                        <h4 style="font-size: 1.4rem; margin-bottom: 8px;">Prompt Engineering (`research_agent.py`)</h4>
-                        <p style="color: var(--muted); line-height: 1.6;">The Python engine combines the user's business
-                            goal (e.g., Growth), the target SKU, and contextual domain memory into a highly structured,
-                            instruction-heavy system prompt.</p>
+                        <h4 style="font-size: 1.4rem; margin-bottom: 8px;">Target Prompt Engineering</h4>
+                        <p style="color: var(--muted); line-height: 1.6;">InsightForge adapts to your priorities
+                            natively. Choosing <strong>Quick Mode</strong> returns actionable tactical advice instantly
+                            for a flash sale. Choosing <strong>Deep Mode</strong> restructures its entire logic to
+                            generate long-term strategic recommendations.</p>
                     </div>
                 </div>
 
@@ -234,10 +235,10 @@
                         style="width: 50px; height: 50px; border-radius: 50%; background: #ffbb00; color: #000; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; flex-shrink: 0;">
                         3</div>
                     <div>
-                        <h4 style="font-size: 1.4rem; margin-bottom: 8px;">LLM Reasoning Integration</h4>
-                        <p style="color: var(--muted); line-height: 1.6;">The FastAPI backend calls the Large Language
-                            Model. The model doesn't just restate data; it evaluates price elasticity, customer
-                            sentiment gaps, and competitive threats based on the prompt.</p>
+                        <h4 style="font-size: 1.4rem; margin-bottom: 8px;">LLM Reasoning Execution</h4>
+                        <p style="color: var(--muted); line-height: 1.6;">The FastAPI backend delegates intelligence
+                            processing to the LLM. It calculates price elasticity against competing SKUs, aggregates
+                            sentiment gaps, and structures evidence around your selected business goal.</p>
                     </div>
                 </div>
 
@@ -247,10 +248,11 @@
                         style="width: 50px; height: 50px; border-radius: 50%; background: #ff4757; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; flex-shrink: 0;">
                         4</div>
                     <div>
-                        <h4 style="font-size: 1.4rem; margin-bottom: 8px;">Decision Output</h4>
-                        <p style="color: var(--muted); line-height: 1.6;">A structured JSON payload returns featuring
-                            Confidence Scores, Risk Arrays, and a final Markdown report containing prioritized Next
-                            Actions for the user.</p>
+                        <h4 style="font-size: 1.4rem; margin-bottom: 8px;">Actionable Output & Resilience</h4>
+                        <p style="color: var(--muted); line-height: 1.6;">The frontend receives a markdown report
+                            containing prioritized Next Actions, a Dynamic Confidence Score you can trust, and
+                            downloadable PDFs. And thanks to our built-in offline fallbacks, the App degrades gracefully
+                            under all network conditions.</p>
                     </div>
                 </div>
             </div>
