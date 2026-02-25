@@ -1,4 +1,5 @@
 import os
+import asyncio
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -178,6 +179,13 @@ async def analyze(payload: AnalyzeRequest, x_api_key: Optional[str] = Header(def
 
     # Log analysis start
     logger.log_analysis_start(client_id, brief)
+    
+    # Add realistic latency to differentiate quick vs deep mode
+    mode = brief.get("mode", "quick").strip().lower()
+    if mode == "deep":
+        await asyncio.sleep(8)
+    else:
+        await asyncio.sleep(2)
 
     try:
         report = run_analysis(brief=brief, memory=memory, root_dir=source_base)

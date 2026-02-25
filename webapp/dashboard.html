@@ -172,7 +172,12 @@
 
             <!-- Full Report -->
             <div class="insight-section minimal-section">
-                <h3>📋 Full Report</h3>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <h3 style="margin: 0;">📋 Full Report</h3>
+                    <button id="downloadPdfBtn" class="btn btn-secondary"
+                        style="display: none; width: auto; padding: 8px 16px; margin-top: 0; font-size: 0.85rem; border-color: rgba(0, 255, 136, 0.3); color: #00ff88; font-weight: 600;">⬇️
+                        Save as PDF</button>
+                </div>
                 <div id="report" class="report-box minimal-box">
                     <p class="placeholder">Analysis report will appear here...</p>
                 </div>
@@ -190,6 +195,7 @@
     <div id="toast" class="toast"></div>
 
     <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script type="module" src="config.js"></script>
     <script type="module" src="api.js"></script>
     <script type="module" src="app.js"></script>

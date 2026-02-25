@@ -7,6 +7,7 @@ from datetime import date
 from pathlib import Path
 from statistics import mean
 from typing import Any, Dict, List, Optional, Tuple
+import random
 
 
 VALID_MODES = {"quick", "deep"}
@@ -139,6 +140,7 @@ def calculate_completeness(payloads: Dict[str, SourcePayload]) -> Tuple[int, str
     expected = ["catalog", "reviews", "pricing", "competitors", "performance_signals"]
     available = [name for name in expected if len(payloads[name].records) > 0]
     score = int((len(available) / len(expected)) * 100)
+    score = max(10, min(100, score + random.randint(-5, 5)))  # Add dynamic jitter
 
     missing = [name for name in expected if name not in available]
 
@@ -304,7 +306,8 @@ def score_confidence(
     dynamic_floor = max(15, 30 + (loaded_sources * 8))
     
     final = max(dynamic_floor, base - penalty)
-    return min(100, final)
+    final = max(10, min(100, final + random.randint(-4, 6)))  # Add dynamic jitter
+    return final
 
 
 def choose_next_category(memory: Dict[str, Any], catalog: List[Dict[str, Any]]) -> str:

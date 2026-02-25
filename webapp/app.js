@@ -25,6 +25,7 @@ const startBtn = getElement("startBtn");
 const runBtn = getElement("runBtn");
 const demoBtn = getElement("demoBtn");
 const newAnalysisBtn = getElement("newAnalysisBtn");
+const downloadPdfBtn = getElement("downloadPdfBtn");
 
 const mobileMenuBtn = getElement("mobileMenuBtn");
 const mainNav = getElement("mainNav");
@@ -128,6 +129,38 @@ function setupEventListeners() {
     });
   }
 
+  // Enter key support for input
+  if (productInput) {
+    productInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        if (!appState.analysisRunning) {
+          handleRunAnalysis();
+        }
+      }
+    });
+  }
+
+  // PDF Download support
+  if (downloadPdfBtn) {
+    downloadPdfBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      if (!report) return;
+      const opt = {
+        margin: 0.5,
+        filename: `${productInput.value.trim() || 'InsightForge'}_Intel_Report.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+
+      showToast("Generating PDF...", "info");
+      html2pdf().set(opt).from(report).save().then(() => {
+        showToast("PDF Downloaded!", "success");
+      });
+    });
+  }
+
   // Advanced Settings Toggle
   const advancedToggleBtn = getElement("advancedToggleBtn");
   const advancedSettings = getElement("advancedSettings");
@@ -222,6 +255,7 @@ function resetToDashboard() {
   if (resultsContainer) resultsContainer.classList.add("hidden");
 
   if (newAnalysisBtn) newAnalysisBtn.style.display = "none";
+  if (downloadPdfBtn) downloadPdfBtn.style.display = "none";
   if (riskList) riskList.innerHTML = '<li class="placeholder">Awaiting analysis...</li>';
   if (recommendations) recommendations.innerHTML = '<li class="placeholder">Awaiting analysis...</li>';
   if (report) report.innerHTML = '<p class="placeholder">Analysis report will appear here...</p>';
@@ -424,6 +458,8 @@ function displayResults(result) {
       const reportContent = Array.isArray(result.report) ? result.report.join("\n") : result.report;
       report.textContent = reportContent;
     }
+
+    if (downloadPdfBtn) downloadPdfBtn.style.display = "block";
   }
 }
 

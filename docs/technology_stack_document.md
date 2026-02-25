@@ -14,8 +14,8 @@
 - **Core Libraries:**
   - `pandas` & `numpy` for localized data preparation, gap calculation, and statistical aggregation.
   - `uvicorn` as the ASGI web server execution layer.
-- **Tunneling:** `npx localtunnel` utilized to dynamically bypass Railway CLI environment issues, seamlessly bridging localhost Python execution securely to the public web.
-- **Hosting Target:** Railway (or Render)
+- **Hosting Target:** Railway (Live Production Environment)
+- **Deployment URL:** `https://insightforge-production-57a5.up.railway.app`
 
 ## 3. DevOps & Version Control
 
