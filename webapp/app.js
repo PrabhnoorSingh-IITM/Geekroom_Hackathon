@@ -149,11 +149,12 @@ function setupEventListeners() {
       e.preventDefault();
       if (!report) return;
       const opt = {
-        margin: 0.5,
+        margin: [0.75, 0.5, 0.75, 0.5],
         filename: `${productInput.value.trim() || 'InsightForge'}_Intel_Report.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        image: { type: 'jpeg', quality: 1.0 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
       };
 
       showToast("Generating PDF...", "info");

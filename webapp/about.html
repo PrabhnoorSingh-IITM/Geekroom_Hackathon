@@ -107,39 +107,45 @@
             <div class="swot-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;">
                 <div class="swot-box fade-up-section delay-1"
                     style="background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.2); padding: 32px; border-radius: 20px;">
-                    <h4 style="color: #00ff88; font-size: 1.4rem; margin-bottom: 16px;">Strengths (S)</h4>
+                    <h4 style="color: #00ff88; font-size: 1.4rem; margin-bottom: 16px;">Strengths</h4>
                     <ul style="color: var(--muted); padding-left: 20px; line-height: 1.8;">
                         <li>Decision-first outputs, not metric dumps</li>
-                        <li>Multi-source reasoning engine</li>
-                        <li>Explainability via confidence scoring</li>
-                        <li>Persistent domain memory</li>
+                        <li>Multi-source reasoning across catalog, reviews, pricing, & competitors</li>
+                        <li>Explainability through structured evidence & uncertainty scoring</li>
+                        <li>Memory layer improves relevance over time</li>
+                        <li>API + CLI support for analysts & webapp for non-technical users</li>
                     </ul>
                 </div>
                 <div class="swot-box fade-up-section delay-2"
                     style="background: rgba(255,187,0,0.05); border: 1px solid rgba(255,187,0,0.2); padding: 32px; border-radius: 20px;">
-                    <h4 style="color: #ffbb00; font-size: 1.4rem; margin-bottom: 16px;">Weaknesses (W)</h4>
+                    <h4 style="color: #ffbb00; font-size: 1.4rem; margin-bottom: 16px;">Weaknesses</h4>
                     <ul style="color: var(--muted); padding-left: 20px; line-height: 1.8;">
-                        <li>Depends on source freshness</li>
-                        <li>Heuristics are rule-based initially</li>
-                        <li>Heavy CSV/JSON upload flow for massive datasets</li>
+                        <li>Quality depends on source freshness and schema consistency</li>
+                        <li>Current heuristics are rule-based, not fully ML-trained</li>
+                        <li>Relative feature/theme extraction can miss nuanced semantics</li>
+                        <li>CSV upload flow can be heavy for very large datasets</li>
                     </ul>
                 </div>
                 <div class="swot-box fade-up-section delay-3"
                     style="background: rgba(0,212,255,0.05); border: 1px solid rgba(0,212,255,0.2); padding: 32px; border-radius: 20px;">
-                    <h4 style="color: #00d4ff; font-size: 1.4rem; margin-bottom: 16px;">Opportunities (O)</h4>
+                    <h4 style="color: #00d4ff; font-size: 1.4rem; margin-bottom: 16px;">Opportunities</h4>
                     <ul style="color: var(--muted); padding-left: 20px; line-height: 1.8;">
-                        <li>Direct BI/Data Warehouse integrations</li>
-                        <li>LLM-based semantic complaint clustering</li>
-                        <li>Proactive price drift & conversion alerts</li>
+                        <li>Integrate with BI/warehouse platforms for live data</li>
+                        <li>Add LLM-based semantic clustering for richer complaint analysis</li>
+                        <li>Build proactive alerts (price drift, sentiment spikes, conversion drops)</li>
+                        <li>Add role-specific views (PM, growth, category owner)</li>
+                        <li>Expand to ad efficiency and inventory planning decisions</li>
                     </ul>
                 </div>
                 <div class="swot-box fade-up-section delay-4"
                     style="background: rgba(255,71,87,0.05); border: 1px solid rgba(255,71,87,0.2); padding: 32px; border-radius: 20px;">
-                    <h4 style="color: #ff4757; font-size: 1.4rem; margin-bottom: 16px;">Threats (T)</h4>
+                    <h4 style="color: #ff4757; font-size: 1.4rem; margin-bottom: 16px;">Threats</h4>
                     <ul style="color: var(--muted); padding-left: 20px; line-height: 1.8;">
-                        <li>LLM API rate limits and costs</li>
-                        <li>Competitor turnkey suites</li>
-                        <li>Overreliance on incomplete data without governance</li>
+                        <li>Data provider limits or API cost increases</li>
+                        <li>Competitors offering turnkey analytics suites</li>
+                        <li>Model drift from changing customer language or product trends</li>
+                        <li>Overreliance on incomplete inputs without governance</li>
+                        <li>Public exposure without auth/rate limiting if misconfigured</li>
                     </ul>
                 </div>
             </div>
@@ -257,17 +263,24 @@
             <div class="about-card"
                 style="background: rgba(0,0,0,0.3); border: 1px solid var(--line); padding: 40px; border-radius: 20px; max-width: 900px; margin: 0 auto;">
                 <p style="font-size: 1.2rem; margin-bottom: 24px;">All core sample data used for the demonstration and
-                    heuristics testing was curated from open datasets.</p>
+                    heuristics testing was curated from open datasets and synthetic benchmarks.</p>
                 <ul
                     style="color: var(--muted); line-height: 2; font-size: 1.1rem; list-style-type: square; padding-left: 24px;">
-                    <li><strong>Product Catalog:</strong> <a href="#"
-                            style="color:var(--primary); text-decoration: none;">Amazon Products Dataset (Kaggle)</a> —
-                        Extracted base SKUs, descriptions, and hierarchy.</li>
-                    <li><strong>Reviews & Sentiment:</strong> <a href="#"
-                            style="color:var(--primary); text-decoration: none;">E-commerce Reviews (Kaggle)</a> —
-                        Normalized for 1-5 star ratings and textual complaints.</li>
-                    <li><strong>Pricing Benchmarks:</strong> Custom generated synthetics modeled after standard
-                        competitive elasticity distributions.</li>
+                    <li><strong>Product Catalog:</strong> <a
+                            href="https://www.kaggle.com/datasets/karkavelrajaj/amazon-sales-dataset" target="_blank"
+                            style="color:var(--primary); text-decoration: none;">Amazon Sales Dataset (Kaggle)</a> —
+                        Base SKUs, broad category descriptions, and pricing hierarchy.</li>
+                    <li><strong>Reviews & Sentiment:</strong> <a
+                            href="https://www.kaggle.com/datasets/datafiniti/consumer-reviews-of-amazon-products"
+                            target="_blank" style="color:var(--primary); text-decoration: none;">Consumer Reviews of
+                            Amazon Products (Kaggle)</a> — Real-world consumer textual feedback spanning electronics to
+                        apparel.</li>
+                    <li><strong>Competitive Market Datasets:</strong> <a
+                            href="https://www.kaggle.com/datasets/saurav9786/amazon-product-size-and-information-dataset"
+                            target="_blank" style="color:var(--primary); text-decoration: none;">Amazon Product Size and
+                            Information Dataset</a> — Used to construct synthetic competitors.</li>
+                    <li><strong>Pricing & Performance Benchmarks:</strong> Custom generated synthetics modeled after
+                        standard competitive elasticity distributions tailored to specific SKUs.</li>
                 </ul>
             </div>
         </section>
