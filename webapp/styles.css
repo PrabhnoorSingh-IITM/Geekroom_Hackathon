@@ -353,8 +353,7 @@ body {
 .input-small:hover {
   outline: none;
   border-color: rgba(var(--primary-rgb), 0.5);
-  background: rgba(var(--primary-rgb), 0.05);
-  box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.15);
+  box-shadow: 0 0 15px rgba(var(--primary-rgb), 0.2);
 }
 
 .form-row {
@@ -1383,4 +1382,28 @@ body {
   .story-lead {
     font-size: 1.1rem;
   }
+}
+
+/* Utilities */
+.hidden {
+  display: none !important;
+}
+
+/* PDF Export Overrides */
+.pdf-export {
+  background: white !important;
+  color: black !important;
+  border: none !important;
+}
+
+.pdf-export * {
+  color: black !important;
+  text-shadow: none !important;
+}
+
+.pdf-export .insight-list li,
+.pdf-export .highlight-list li {
+  background: #f9f9f9 !important;
+  border-color: #ddd !important;
+  color: black !important;
 }

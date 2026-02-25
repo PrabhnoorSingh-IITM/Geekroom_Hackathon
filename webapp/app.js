@@ -155,8 +155,13 @@ function setupEventListeners() {
       };
 
       showToast("Generating PDF...", "info");
+      report.classList.add("pdf-export");
       html2pdf().set(opt).from(report).save().then(() => {
+        report.classList.remove("pdf-export");
         showToast("PDF Downloaded!", "success");
+      }).catch((err) => {
+        report.classList.remove("pdf-export");
+        console.error("PDF generation failed:", err);
       });
     });
   }
@@ -370,7 +375,7 @@ async function handleRunAnalysis() {
       brief: brief,
       update_memory: false,
       memory_path: "data/domain_memory.json",
-      source_base_dir: "examples",
+      source_base_dir: "datasets/processed",
       output_path: "out/api_report.md"
     };
 
