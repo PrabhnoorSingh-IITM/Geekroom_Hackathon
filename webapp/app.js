@@ -7,6 +7,8 @@ import { CONFIG } from "./config.js";
 let appState = {
   isDashboardVisible: false,
   analysisRunning: false,
+  uploadedFiles: [],
+  parsedData: {},
 };
 
 // ====================================
@@ -313,19 +315,44 @@ async function checkAPIHealth() {
 
 function handleFiles(files) {
   console.log(`📁 ${files.length} file(s) selected`);
-  // appState.uploadedFiles = Array.from(files); // Removed as per new appState
+  const newFiles = Array.from(files);
+  appState.uploadedFiles = newFiles;
+
+  if (typeof Papa !== 'undefined') {
+    appState.parsedData = {}; // clear old
+    newFiles.forEach((file) => {
+      Papa.parse(file, {
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: true,
+        complete: function (results) {
+          console.log(`Parsed ${file.name}: ${results.data.length} rows`);
+
+          if (file.name.toLowerCase().includes('review')) {
+            appState.parsedData.reviews = results.data;
+          } else if (file.name.toLowerCase().includes('price') || file.name.toLowerCase().includes('pricing')) {
+            appState.parsedData.pricing = results.data;
+          } else {
+            // Default to catalog if ambiguous
+            appState.parsedData.catalog = results.data;
+          }
+        }
+      });
+    });
+  }
+
   displayFileList();
 }
 
 function displayFileList() {
   if (!fileList) return;
   fileList.innerHTML = "";
-  // appState.uploadedFiles.forEach((file, index) => { // Removed as per new appState
-  //   const item = document.createElement("div");
-  //   item.className = "file-item";
-  //   item.innerHTML = `<span>📄 ${file.name} (${(file.size / 1024).toFixed(1)}KB)</span>`;
-  //   fileList.appendChild(item);
-  // });
+  appState.uploadedFiles.forEach((file) => {
+    const item = document.createElement("div");
+    item.className = "file-item";
+    item.innerHTML = `<span>📄 ${file.name} (${(file.size / 1024).toFixed(1)}KB)</span>`;
+    fileList.appendChild(item);
+  });
 }
 
 // ====================================
@@ -369,6 +396,15 @@ async function handleRunAnalysis() {
         performance_signals: { path: "performance_signals.json" }
       }
     };
+
+    // If Custom CSV mode is active and we have parsed data, inject it inline
+    const isCustomMode = document.querySelector('input[name="dataMode"]:checked')?.value === "custom";
+    if (isCustomMode && Object.keys(appState.parsedData).length > 0) {
+      console.log("Injecting custom user CSV data inline into the analysis payload.");
+      if (appState.parsedData.catalog) brief.data_sources.catalog = appState.parsedData.catalog;
+      if (appState.parsedData.reviews) brief.data_sources.reviews = appState.parsedData.reviews;
+      if (appState.parsedData.pricing) brief.data_sources.pricing = appState.parsedData.pricing;
+    }
 
     console.log("📤 Analysis request:", brief);
     const apiPayload = {
