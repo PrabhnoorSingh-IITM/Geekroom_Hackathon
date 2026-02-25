@@ -1,5 +1,6 @@
 import os
 import asyncio
+import re
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -208,24 +209,35 @@ async def analyze(payload: AnalyzeRequest, x_api_key: Optional[str] = Header(def
         updated = update_memory(memory, brief)
         write_json(memory_file, updated)
 
-    # Extract confidence from report for logging
-    confidence = 0
+    # Extract confidence from report for logging and response
+    confidence_score = 0.75
     if "Confidence Score:" in report:
         try:
             conf_line = [line for line in report.split("\n") if "Confidence Score:" in line][0]
-            confidence = int(conf_line.split()[-1].rstrip("%"))
+            # Match any sequences of digits before a % sign or at the end of a word
+            match = re.search(r'(\d+)\s*%', conf_line)
+            if match:
+                confidence_score = min(1.0, max(0.0, float(match.group(1)) / 100.0))
         except:
-            confidence = 0
+            pass
 
-    completeness = "Unknown"
-    if "Data Completeness" in report:
+    completeness_float = 0.8
+    if "Completeness" in report:
         try:
-            comp_line = [line for line in report.split("\n") if "Data Completeness" in line][0]
-            completeness = comp_line.split(":")[-1].strip().split()[0]
+            comp_line = [line for line in report.split("\n") if "Completeness" in line][0]
+            # Look for explicit percentage first
+            match = re.search(r'(\d+)\s*%', comp_line)
+            if match:
+                completeness_float = min(1.0, max(0.0, float(match.group(1)) / 100.0))
+            else:
+                # If quick mode only says "Robust", map it
+                if "Robust" in comp_line: completeness_float = 0.95
+                elif "Partial" in comp_line: completeness_float = 0.60
+                elif "Sparse" in comp_line: completeness_float = 0.35
         except:
-            completeness = "Unknown"
+            pass
 
-    logger.log_analysis_complete(client_id, confidence, completeness)
+    logger.log_analysis_complete(client_id, int(confidence_score * 100), str(completeness_float))
 
     # Extract risks and recommendations from report
     risks = []
@@ -251,15 +263,6 @@ async def analyze(payload: AnalyzeRequest, x_api_key: Optional[str] = Header(def
         elif in_recommendations_section and line.strip().startswith("-"):
             recommendations.append(line.strip()[2:] if line.strip().startswith("- ") else line.strip())
     
-    # Convert confidence to float (0.0-1.0)
-    confidence_score = min(1.0, max(0.0, confidence / 100.0)) if confidence > 0 else 0.75
-    
-    # Convert completeness to float (0.0-1.0)
-    try:
-        completeness_float = float(completeness.strip("%").strip()) / 100.0 if "%" not in completeness else float(completeness.rstrip("%")) / 100.0
-    except:
-        completeness_float = 0.8
-
     return AnalyzeResponse(
         status="success",
         mode=str(brief["mode"]),
