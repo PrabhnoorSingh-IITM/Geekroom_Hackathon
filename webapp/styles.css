@@ -802,22 +802,95 @@ body {
   gap: 8px;
 }
 
-/* PDF Export Overrides */
-.pdf-export-mode {
-  background: #07090b !important;
-  padding: 24px !important;
-  border: none !important;
+/* Professional PDF Report Theme */
+.pdf-report-theme {
+  background: #ffffff !important;
+  color: #1f2937 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
 }
 
-.pdf-export-mode .report-box {
+.pdf-report-theme .metric-card {
+  background: #f9fafb !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.pdf-report-theme .metric-value {
+  background: none !important;
+  -webkit-text-fill-color: #111827 !important;
+  color: #111827 !important;
+}
+
+.pdf-report-theme .metric-label {
+  color: #6b7280 !important;
+}
+
+.pdf-report-theme .insight-section h3 {
+  color: #111827 !important;
+  border-bottom: 2px solid #f3f4f6;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+.pdf-report-theme .insight-list li {
+  background: #ffffff !important;
+  border-color: #e5e7eb !important;
+  color: #374151 !important;
+  box-shadow: none !important;
+}
+
+.pdf-report-theme .report-box {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  color: #374151 !important;
   max-height: none !important;
   height: auto !important;
   overflow: visible !important;
+  box-shadow: none !important;
 }
 
-.pdf-export-mode button {
+.pdf-report-theme .report-box * {
+  color: #374151 !important;
+}
+
+.pdf-report-theme .report-box h1,
+.pdf-report-theme .report-box h2,
+.pdf-report-theme .report-box h3 {
+  color: #111827 !important;
+}
+
+.pdf-report-theme .badge {
+  background: #f3f4f6 !important;
+  color: #4b5563 !important;
+  border-color: #d1d5db !important;
+}
+
+.pdf-report-theme button,
+.pdf-report-theme .advanced-toggle,
+.pdf-report-theme .status-badges,
+.pdf-report-theme .header,
+.pdf-report-theme .bg-orbs,
+.pdf-report-theme .cursor-glow {
   display: none !important;
 }
+
+.pdf-report-theme .meter {
+  background: #e5e7eb !important;
+}
+
+.pdf-report-theme .meter-fill {
+  box-shadow: none !important;
+}
+
+.pdf-report-theme .results-container {
+  margin-top: 0 !important;
+  padding: 20px !important;
+}
+
 
 .badge {
   padding: 4px 10px;

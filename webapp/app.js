@@ -147,27 +147,36 @@ function setupEventListeners() {
   if (downloadPdfBtn) {
     downloadPdfBtn.addEventListener("click", function (e) {
       e.preventDefault();
-      if (!report) return;
       const resultsContainer = getElement("resultsContainer");
       if (!resultsContainer) return;
 
       const opt = {
-        margin: [0.5, 0.5, 0.5, 0.5],
+        margin: [0.5, 0.5],
         filename: `${productInput.value.trim() || 'InsightForge'}_Intel_Report.pdf`,
-        image: { type: 'jpeg', quality: 1.0 },
-        html2canvas: { scale: 2, useCORS: true, backgroundColor: '#07090b', windowWidth: 1200 },
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#ffffff',
+          logging: false,
+          letterRendering: true
+        },
         jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
         pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
       };
 
-      showToast("Generating PDF...", "info");
-      resultsContainer.classList.add("pdf-export-mode");
+      showToast("Generating Professional PDF...", "info");
+
+      // Apply professional report theme to the whole body temporarily
+      document.body.classList.add("pdf-report-theme");
+
       html2pdf().set(opt).from(resultsContainer).save().then(() => {
-        resultsContainer.classList.remove("pdf-export-mode");
-        showToast("PDF Downloaded!", "success");
+        document.body.classList.remove("pdf-report-theme");
+        showToast("Professional PDF Downloaded!", "success");
       }).catch((err) => {
-        resultsContainer.classList.remove("pdf-export-mode");
+        document.body.classList.remove("pdf-report-theme");
         console.error("PDF generation failed:", err);
+        showToast("PDF generation failed. Check console.", "error");
       });
     });
   }
