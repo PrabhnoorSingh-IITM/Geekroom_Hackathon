@@ -428,6 +428,12 @@ async function handleRunAnalysis() {
     console.warn("Analysis API unreachable or failed:", error);
     setStatus(`❌ ${error.message}`);
     showToast(error.message, "error");
+
+    // Clear the "Analyzing..." placeholders on failure
+    if (riskList) riskList.innerHTML = `<li class="placeholder" style="color: #ff6b6b;">${error.message}</li>`;
+    if (recommendations) recommendations.innerHTML = '<li class="placeholder" style="color: #ff6b6b;">Failed to generate recommendations.</li>';
+    if (report) report.innerHTML = `<p class="placeholder" style="color: #ff6b6b;">Analysis aborted. Please check your data sources and try again.</p>`;
+
   } finally {
     setLoading(false);
     appState.analysisRunning = false;
