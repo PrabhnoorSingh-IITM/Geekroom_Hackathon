@@ -1,10 +1,35 @@
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-.venv/
-out/
+# Exclude huge directories
+.git
 .git/
-.gitignore
+.git/**
+datasets
+datasets/
+datasets/**
+.venv
+.venv/
+.venv/**
+
+# System and logs
 .DS_Store
+.firebaserc
+.firebase/
+.vscode/
+__pycache__
+__pycache__/
+**/*.py[cod]
+*.log
+
+# Documentation and others
+docs
+docs/
+docs/**
+out
+out/
+out/**
+tests
+tests/
+tests/**
+examples
+examples/
+examples/**
+Dataset-raw/
