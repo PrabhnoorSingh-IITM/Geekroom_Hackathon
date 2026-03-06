@@ -150,37 +150,42 @@ function setupEventListeners() {
       const resultsContainer = getElement("resultsContainer");
       if (!resultsContainer) return;
 
+      showToast("Generating High-Contrast Report...", "info");
+
+      // Force total layout reset class to HTML and Body
+      document.documentElement.classList.add("pdf-report-theme");
+      document.body.classList.add("pdf-report-theme");
+
       const opt = {
         margin: [0.5, 0.5],
         filename: `${productInput.value.trim() || 'InsightForge'}_Intel_Report.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
+        image: { type: 'jpeg', quality: 1.0 },
         html2canvas: {
           scale: 2,
           useCORS: true,
           backgroundColor: '#ffffff',
-          logging: false,
-          letterRendering: true
+          scrollY: 0,
+          scrollX: 0,
+          windowWidth: 1200,
+          logging: false
         },
         jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
         pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
       };
 
-      showToast("Generating High-Contrast Report...", "info");
-
-      // Apply professional report theme to the whole body temporarily
-      document.body.classList.add("pdf-report-theme");
-
-      // Give the browser a moment to drop filters and apply high-contrast styles
+      // Give the browser sufficient time to reset layout and drop transitions
       setTimeout(() => {
         html2pdf().set(opt).from(resultsContainer).save().then(() => {
+          document.documentElement.classList.remove("pdf-report-theme");
           document.body.classList.remove("pdf-report-theme");
           showToast("Professional PDF Downloaded!", "success");
         }).catch((err) => {
+          document.documentElement.classList.remove("pdf-report-theme");
           document.body.classList.remove("pdf-report-theme");
           console.error("PDF generation failed:", err);
           showToast("PDF generation failed. Check console.", "error");
         });
-      }, 150);
+      }, 300);
     });
   }
 

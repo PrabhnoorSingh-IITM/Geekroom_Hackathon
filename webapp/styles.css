@@ -802,18 +802,21 @@ body {
   gap: 8px;
 }
 
-/* Professional PDF Report Theme - High Contrast Overhaul */
-.pdf-report-theme {
+/* Professional PDF Report Theme - Total Layout Reset & High Contrast */
+html.pdf-report-theme,
+body.pdf-report-theme,
+.pdf-report-theme main.minimal-layout {
   background: #ffffff !important;
-  color: #000000 !important;
-  padding: 0 !important;
   margin: 0 !important;
+  padding: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
   width: 100% !important;
-  max-width: none !important;
-  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  overflow: visible !important;
 }
 
 .pdf-report-theme * {
+  color: #000000 !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   box-shadow: none !important;
@@ -822,97 +825,21 @@ body {
   animation: none !important;
 }
 
-.pdf-report-theme .metric-card {
-  background: #ffffff !important;
-  border: 2px solid #eeeeee !important;
-  padding: 24px !important;
-  border-radius: 12px !important;
-}
-
-.pdf-report-theme .metric-value {
-  background: none !important;
-  -webkit-text-fill-color: #000000 !important;
-  color: #000000 !important;
-  font-weight: 800 !important;
-  font-size: 2.5rem !important;
-}
-
-.pdf-report-theme .metric-label {
-  color: #444444 !important;
-  font-weight: 600 !important;
-}
-
-.pdf-report-theme .insight-section {
-  background: #ffffff !important;
-  border: 2px solid #eeeeee !important;
-  border-radius: 16px !important;
-  padding: 32px !important;
-  margin-bottom: 24px !important;
-}
-
-.pdf-report-theme .insight-section h3 {
-  color: #000000 !important;
-  border-bottom: 3px solid #00ff88 !important;
-  /* Keep the branding touch */
-  padding-bottom: 8px !important;
-  margin-bottom: 20px !important;
-  font-size: 1.5rem !important;
-}
-
-.pdf-report-theme .insight-list li {
-  background: #fdfdfd !important;
-  border: 1px solid #eeeeee !important;
-  color: #111111 !important;
-  padding: 16px !important;
-  margin-bottom: 12px !important;
-  font-weight: 500 !important;
-}
-
-.pdf-report-theme .report-box {
-  background: #ffffff !important;
-  border: 1px solid #eeeeee !important;
-  color: #000000 !important;
-  padding: 24px !important;
-  max-height: none !important;
-  height: auto !important;
-  overflow: visible !important;
-}
-
-.pdf-report-theme .report-box * {
-  color: #000000 !important;
-}
-
-.pdf-report-theme .report-box h1,
-.pdf-report-theme .report-box h2,
-.pdf-report-theme .report-box h3 {
-  color: #000000 !important;
-  margin-top: 24px !important;
-}
-
-.pdf-report-theme .badge {
-  background: #eeeeee !important;
-  color: #000000 !important;
-  border: 1px solid #cccccc !important;
-  font-weight: bold !important;
-}
-
-.pdf-report-theme button,
-.pdf-report-theme .advanced-toggle,
-.pdf-report-theme .status-badges,
-.pdf-report-theme .header,
+.pdf-report-theme .search-hero,
+.pdf-report-theme header,
 .pdf-report-theme .bg-orbs,
 .pdf-report-theme .cursor-glow,
-.pdf-report-theme #newAnalysisBtn {
+.pdf-report-theme .toast,
+.pdf-report-theme .status-badges,
+.pdf-report-theme .advanced-toggle,
+.pdf-report-theme button,
+.pdf-report-theme #configAlert,
+.pdf-report-theme #configStatus {
   display: none !important;
-}
-
-.pdf-report-theme .meter {
-  background: #eeeeee !important;
-  height: 12px !important;
-}
-
-.pdf-report-theme .meter-fill {
-  background: #00ff88 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
 }
 
 .pdf-report-theme .results-container {
@@ -921,6 +848,61 @@ body {
   padding: 40px !important;
   width: 100% !important;
   max-width: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.pdf-report-theme .metric-card {
+  background: #ffffff !important;
+  border: 2px solid #000000 !important;
+  padding: 24px !important;
+  border-radius: 8px !important;
+}
+
+.pdf-report-theme .metric-value {
+  -webkit-text-fill-color: #000000 !important;
+  font-weight: 800 !important;
+  font-size: 2.5rem !important;
+}
+
+.pdf-report-theme .metric-label {
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+.pdf-report-theme .insight-section {
+  background: #ffffff !important;
+  border: 2px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  padding: 30px !important;
+  margin-bottom: 30px !important;
+  page-break-inside: avoid !important;
+}
+
+.pdf-report-theme .insight-section h3 {
+  color: #000000 !important;
+  border-bottom: 2px solid #00ff88 !important;
+  padding-bottom: 10px !important;
+  margin-bottom: 20px !important;
+  font-size: 1.6rem !important;
+}
+
+.pdf-report-theme .insight-list li {
+  background: #fdfdfd !important;
+  border: 1px solid #e5e7eb !important;
+  color: #000000 !important;
+  padding: 16px !important;
+  margin-bottom: 15px !important;
+  font-size: 1.1rem !important;
+}
+
+.pdf-report-theme .report-box {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  padding: 24px !important;
+  height: auto !important;
+  max-height: none !important;
 }
 
 .pdf-header-only {
@@ -930,20 +912,19 @@ body {
 .pdf-report-theme .pdf-header-only {
   display: block !important;
   text-align: center !important;
-  margin-bottom: 40px !important;
-  border-bottom: 1px solid #eeeeee !important;
-  padding-bottom: 20px !important;
+  margin-bottom: 50px !important;
+  padding-top: 20px !important;
 }
 
 .pdf-report-theme .pdf-header-only h1 {
-  font-size: 2.2rem !important;
+  font-size: 2.4rem !important;
   color: #000000 !important;
-  margin: 0 !important;
+  margin-bottom: 10px !important;
 }
 
 .pdf-report-theme .pdf-header-only p {
-  color: #666666 !important;
-  margin-top: 8px !important;
+  font-size: 1.2rem !important;
+  color: #444444 !important;
 }
 
 
