@@ -165,19 +165,22 @@ function setupEventListeners() {
         pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
       };
 
-      showToast("Generating Professional PDF...", "info");
+      showToast("Generating High-Contrast Report...", "info");
 
       // Apply professional report theme to the whole body temporarily
       document.body.classList.add("pdf-report-theme");
 
-      html2pdf().set(opt).from(resultsContainer).save().then(() => {
-        document.body.classList.remove("pdf-report-theme");
-        showToast("Professional PDF Downloaded!", "success");
-      }).catch((err) => {
-        document.body.classList.remove("pdf-report-theme");
-        console.error("PDF generation failed:", err);
-        showToast("PDF generation failed. Check console.", "error");
-      });
+      // Give the browser a moment to drop filters and apply high-contrast styles
+      setTimeout(() => {
+        html2pdf().set(opt).from(resultsContainer).save().then(() => {
+          document.body.classList.remove("pdf-report-theme");
+          showToast("Professional PDF Downloaded!", "success");
+        }).catch((err) => {
+          document.body.classList.remove("pdf-report-theme");
+          console.error("PDF generation failed:", err);
+          showToast("PDF generation failed. Check console.", "error");
+        });
+      }, 150);
     });
   }
 
