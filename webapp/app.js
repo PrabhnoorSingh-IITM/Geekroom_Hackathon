@@ -185,7 +185,7 @@ function setupEventListeners() {
           console.error("PDF generation failed:", err);
           showToast("PDF generation failed. Check console.", "error");
         });
-      }, 300);
+      }, 400);
     });
   }
 
