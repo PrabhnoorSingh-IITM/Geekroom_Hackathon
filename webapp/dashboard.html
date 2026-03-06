@@ -87,7 +87,7 @@
                 <div class="settings-grid">
                     <!-- Analysis Mode -->
                     <div class="form-section">
-                        <label class="form-label">How detailed?</label>
+                        <span class="form-label" id="detailHeading">How detailed?</span>
                         <div class="mode-toggle">
                             <label class="toggle-item" for="modeQuick">
                                 <input type="radio" id="modeQuick" name="mode" value="quick" checked />
@@ -102,7 +102,7 @@
 
                     <!-- Business Goal -->
                     <div class="form-section">
-                        <label class="form-label">Your goal?</label>
+                        <span class="form-label" id="goalHeading">Your goal?</span>
                         <div class="goal-buttons">
                             <label class="goal-btn" for="goalGrowth">
                                 <input type="radio" id="goalGrowth" name="goal" value="growth" checked />
@@ -125,7 +125,7 @@
 
                     <!-- Data Source Mode -->
                     <div class="form-section" style="grid-column: 1 / -1;">
-                        <label class="form-label">Data Source</label>
+                        <span class="form-label" id="dataSourceHeading">Data Source</span>
                         <div class="data-toggle" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
                             <label class="toggle-item" for="dataModeSample">
                                 <input type="radio" id="dataModeSample" name="dataMode" value="sample" checked />
@@ -144,8 +144,9 @@
 
                     <!-- Upload Section -->
                     <div id="uploadSection" class="form-section hidden" style="grid-column: 1 / -1; margin-top: 8px;">
-                        <label class="form-label">Upload Catalog/Reviews CSV <small class="label-hint">(Trains LLM
-                                Context)</small></label>
+                        <span class="form-label" id="uploadHeading">Upload Catalog/Reviews CSV <small
+                                class="label-hint">(Trains LLM
+                                Context)</small></span>
                         <div class="file-drop-zone" id="fileDropZone">
                             <div class="file-drop-icon">📂</div>
                             <div>Drag & drop CSV files here or click to browse</div>
