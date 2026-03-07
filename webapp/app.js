@@ -336,25 +336,30 @@ async function checkAPIHealth() {
 
 function handleFiles(files) {
   console.log(`📁 ${files.length} file(s) selected`);
-  const newFiles = Array.from(files);
-  appState.uploadedFiles = newFiles;
+  const selectedFiles = Array.from(files);
+  appState.uploadedFiles = selectedFiles;
 
   if (typeof Papa !== 'undefined') {
-    appState.parsedData = {}; // clear old
-    newFiles.forEach((file) => {
+    appState.parsedData = {}; // reset for fresh selection
+    selectedFiles.forEach((file) => {
       Papa.parse(file, {
         header: true,
         dynamicTyping: true,
         skipEmptyLines: true,
         complete: function (results) {
           console.log(`Parsed ${file.name}: ${results.data.length} rows`);
+          const name = file.name.toLowerCase();
 
-          if (file.name.toLowerCase().includes('review')) {
+          if (name.includes('review')) {
             appState.parsedData.reviews = results.data;
-          } else if (file.name.toLowerCase().includes('price') || file.name.toLowerCase().includes('pricing')) {
+          } else if (name.includes('price') || name.includes('pricing')) {
             appState.parsedData.pricing = results.data;
+          } else if (name.includes('perf') || name.includes('signal')) {
+            appState.parsedData.performance_signals = results.data;
+          } else if (name.includes('comp')) {
+            appState.parsedData.competitors = results.data;
           } else {
-            // Default to catalog if ambiguous
+            // Default to catalog if likely
             appState.parsedData.catalog = results.data;
           }
         }
@@ -422,9 +427,12 @@ async function handleRunAnalysis() {
     const isCustomMode = document.querySelector('input[name="dataMode"]:checked')?.value === "custom";
     if (isCustomMode && Object.keys(appState.parsedData).length > 0) {
       console.log("Injecting custom user CSV data inline into the analysis payload.");
-      if (appState.parsedData.catalog) brief.data_sources.catalog = appState.parsedData.catalog;
-      if (appState.parsedData.reviews) brief.data_sources.reviews = appState.parsedData.reviews;
-      if (appState.parsedData.pricing) brief.data_sources.pricing = appState.parsedData.pricing;
+      // Inject all available custom data sources to override defaults
+      Object.keys(appState.parsedData).forEach(key => {
+        if (appState.parsedData[key] && appState.parsedData[key].length > 0) {
+          brief.data_sources[key] = appState.parsedData[key];
+        }
+      });
     }
 
     console.log("📤 Analysis request:", brief);

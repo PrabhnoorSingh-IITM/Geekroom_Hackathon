@@ -592,6 +592,50 @@ def parse_constraints(constraints: List[str]) -> Dict[str, bool]:
     }
 
 
+def filter_payloads(
+    query: str, 
+    payloads: Dict[str, SourcePayload]
+) -> Dict[str, List[Dict[str, Any]]]:
+    catalog = payloads["catalog"].records
+    query = query.strip().upper() if query else ""
+    
+    if not query:
+        return {k: p.records for k, p in payloads.items()}
+
+    # Extract all SKUs and Categories for matching
+    all_skus = {str(row.get("sku", "")).upper() for row in catalog}
+    all_categories = {str(row.get("category", "")).upper() for row in catalog}
+    
+    target_skus = set()
+    if query in all_skus:
+        target_skus.add(query)
+    elif query in all_categories:
+        target_skus = {
+            str(row.get("sku", "")).upper() 
+            for row in catalog 
+            if str(row.get("category", "")).upper() == query
+        }
+    else:
+        # Fallback: substring match if no exact match
+        target_skus = {
+            str(row.get("sku", "")).upper() 
+            for row in catalog 
+            if query in str(row.get("sku", "")).upper() or query in str(row.get("category", "")).upper()
+        }
+
+    if not target_skus:
+        # If no match found, fallback to original or potentially empty
+        return {k: p.records for k, p in payloads.items()}
+
+    return {
+        "catalog": [row for row in catalog if str(row.get("sku", "")).upper() in target_skus],
+        "reviews": [row for row in payloads["reviews"].records if str(row.get("sku", "")).upper() in target_skus],
+        "pricing": [row for row in payloads["pricing"].records if str(row.get("sku", "")).upper() in target_skus],
+        "competitors": payloads["competitors"].records, # Keep all competitors for general context
+        "performance_signals": [row for row in payloads["performance_signals"].records if str(row.get("sku", "")).upper() in target_skus],
+    }
+
+
 def build_clarification_questions(brief: Dict[str, Any]) -> List[str]:
     questions = []
     if "business_goal" not in brief:
@@ -628,11 +672,15 @@ def run_analysis(brief: Dict[str, Any], memory: Dict[str, Any], root_dir: Path) 
 
     constraints = parse_constraints(brief.get("constraints", []))
 
-    reviews = payloads["reviews"].records
-    pricing = payloads["pricing"].records
-    perf = payloads["performance_signals"].records
-    catalog = payloads["catalog"].records
-    competitors = payloads["competitors"].records
+    # Apply filtering based on search query
+    query = brief.get("scope", {}).get("category_or_product")
+    filtered_data = filter_payloads(query, payloads)
+
+    reviews = filtered_data["reviews"]
+    pricing = filtered_data["pricing"]
+    perf = filtered_data["performance_signals"]
+    catalog = filtered_data["catalog"]
+    competitors = filtered_data["competitors"]
 
     complaint_data = top_complaints(reviews, constraints["negative_reviews_only"])
     feature_gap_data = competitor_feature_gaps(
